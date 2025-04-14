@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import Image from 'next/image'
 import React from 'react'
 
 const Navbar = () => {
@@ -8,7 +9,9 @@ const Navbar = () => {
        <div className='container mx-auto font-chakra flex flex-col md:flex-row justify-between items-center h-full'>
         <div className="flex gap-4">
             <div>
-                <Link href={"/"}>Logo</Link>
+                <Link href={"/"}>
+                  <Image src={"/assets/logo.png"} alt="Digi Drop Logo" width={54} height={48}/>  
+                </Link>
             </div>
             
             <div className="hidden md:flex gap-6 font-medium items-center">
