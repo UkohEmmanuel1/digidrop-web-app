@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import {  Chakra_Petch } from "next/font/google";
 import { Toaster } from "sonner";
-import "./globals.css";
+import DashboardNavbar from "../_components/dashboard-navbar";
+import Footer from "@/components/common/footer";
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra-petch",
@@ -23,13 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${chakra.variable} antialiased bg-[#1C1C1C]`}
-      >
-        <Toaster position="bottom-right" richColors/>
-        {children}
-      </body>
-    </html>
+    
+      <div className={`${chakra.variable} antialiased bg-[#1C1C1C] min-h-screen w-full relative`}>
+        <DashboardNavbar/>
+          {children}
+        <Footer/>
+      </div>
+    
   );
 }

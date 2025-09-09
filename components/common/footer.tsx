@@ -9,17 +9,17 @@ const Footer = () => {
         <div className='flex flex-col md:flex-row gap-6 space-x-10 text-gray-200 max-w-5xl'>
                 <div className='flex md:flex-row flex-col justify-center text-center gap-6 text-gray-400'>
                     <p className="">COPYRIGHT 2025</p>
-                    <p className="">TERMS AND CONDITIONS</p>
+                    <Link href={"/term-and-condition"} className="">TERMS AND CONDITIONS</Link>
                     <p className="">PRIVACY POLICY</p>
                 </div>
                 <div className='flex gap-4'>
                     <span>|</span>
-                    <p className="">WHITEPAPER</p>
-                    <p className="">VISIT ASTRANOVA</p>
+                    <Link href={"/whitepaper"} className="">WHITEPAPER</Link>
+                    <p className="">VISIT DIGIDROP</p>
                 </div>
                 <div className="flex justify-center space-x-6 mb-4">
                 <Link href="https://twitter.com/yourhandle" target="_blank">
-                  <FaTwitter className="text-xl text-gray-600 hover:text-blue-400 transition" />
+                  <FaTwitter className="text-xl  hover:text-blue-400 transition" />
                 </Link>
                 <Link href="https://facebook.com/yourhandle" target="_blank">
                   <FaFacebook className="text-xl hover:text-blue-600 transition" />
