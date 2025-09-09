@@ -31,7 +31,7 @@ const SignUp = () => {
         <div className="flex h-full justify-center items-center">
             <Card className='w-full max-w-2xl bg-gray-900  text-gray-200'>
                 <CardHeader>
-                    <CardTitle className='text-center text-2xl font-chakra'>DiGiVerse SignUp</CardTitle>
+                    <CardTitle className='text-center uppercase text-2xl font-chakra'>DiGiVerse SignUp</CardTitle>
                     <CardContent>
                         <Form {...form}>
                             <form action="">
@@ -40,7 +40,7 @@ const SignUp = () => {
                                 name="username"
                                 render={({ field }) => (
                                     <FormItem>
-                                    <FormLabel>Username</FormLabel>
+                                    <FormLabel> Choose Username</FormLabel>
                                     <FormControl>
                                         <Input placeholder="username" {...field} />
                                     </FormControl>

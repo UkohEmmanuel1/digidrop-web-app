@@ -16,13 +16,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { signupSchema, UserSignupSchemaType } from '@/app/schema/auth';
+import Link from 'next/link';
 
 const Login = () => {
     const form = useForm<UserSignupSchemaType>({
         resolver: zodResolver(signupSchema),
         defaultValues:{
            email:"",
-           username: "",
            password:""
         }
     })
@@ -53,7 +53,7 @@ const Login = () => {
                                         <Input placeholder="email" {...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        enter your username
+                                        enter your email
                                     </FormDescription>
                                     <FormMessage />
                                     </FormItem>
@@ -64,23 +64,26 @@ const Login = () => {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem>
-                                    <FormLabel>Email Address</FormLabel>
+                                    <FormLabel>Password</FormLabel>
                                     <FormControl>
                                         <Input placeholder="password" {...field} />
                                     </FormControl>
-                                    <FormDescription>
-                                        enter a strong password
-                                    </FormDescription>
+                                    
                                     <FormMessage />
                                     </FormItem>
                                 )}
                                 />
+                                <div className="flex justify-between items-center py-4 px-2 gap-4">
+                                    <span className='flex gap-3'><input type='checkbox'/> Remember me</span>
+                                    <Link href={"/forget-password"} className='text-[#CB6CE6]'>Forget Password</Link>
+                                </div>
                                 <div className='w-full flex justify-center items-center'>
                                     <Button variant={"outline"} className='bg-gray-900 text-white'>Login</Button>
                                 </div>
 
                             </form>
-                        </Form>     
+                        </Form> 
+                        <p className="text-xl font-medium text-center py-4 tracking-wide">Dont have an account? <a href="/signup" className='text-[#CB6CE6]'>SignUp</a></p>    
                     </CardContent>
                 </CardHeader>
             </Card>
