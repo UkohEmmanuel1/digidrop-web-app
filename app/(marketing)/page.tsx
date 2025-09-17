@@ -210,7 +210,7 @@ export default function Home() {
       />
 
       {/* Daily Login */}
-      <div className="w-full md:w-1/2 flex flex-wrap gap-6 md:gap-12 px-6 md:px-12 lg:px-20 py-8 md:py-16 items-center justify-center md:justify-start">
+      <div className="absolute top-20 left-10 bg-gradient-to-br from-blue-900 to-black rounded-xl shadow-lg p-4 text-center w-40">
         <p className="text-white font-semibold">DAILY LOGIN</p>
         <button className="mt-2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-md">
           20 POINT
