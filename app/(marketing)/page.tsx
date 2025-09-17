@@ -9,21 +9,13 @@ import BenefitSection from "./_components/benefit-section";
 import BrandSupport from "./_components/brand-section";
 import FAQ from "./_components/faq-section";
 import LogoMark from "./_components/logo-mark";
-import Footer from "@/components/common/footer";
-
-const tasks = [
-  { msg: "Daily Login", reward: "$200" },
-  { msg: "Perform a task", reward: "#500" },
-  { msg: "Invite a friend", reward: "$100" },
-];
-
 
 export default function Home() {
   return (
     <>
       {" "}
-      <section className="h-full w-full bg-[linear-gradient(to_bottom,#3B1F83_30%,#004AAD_75%,#1C1C1C_100%)] px-4 sm:px-8">
-        <div className="flex flex-col justify-center mb-10 items-center gap-6 text-center">
+      <section className="h-full w-full bg-[linear-gradient(to_bottom,#3B1F83_30%,#004AAD_50%,#1C1C1C_75%)] px-4 sm:px-8">
+        <div className="flex flex-col justify-center mb-10 items-center gap-2 text-center">
           {/* Animated Heading */}
           <motion.h1
             initial={{ opacity: 0, y: -50 }}
@@ -60,10 +52,7 @@ export default function Home() {
           </motion.p>
 
           {/* Pass Images */}
-          <div
-            className="w-full mt-10 py-4 grid grid-cols-3 justify-items-center items-center
- justify-center"
-          >
+          <div className="w-full mt-10 py-4 grid grid-cols-1 md:grid-cols-3 gap-1 justify-items-center items-center">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -119,8 +108,19 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}
             viewport={{ once: true }}
+            className="flex justify-center"
           >
-            <Button className="px-8 sm:px-12 py-3 sm:py-4 border-2 border-purple-400 bg-gray-800 hover:bg-gray-700 rounded-lg shadow-xl font-medium transition-transform duration-300 hover:scale-105">
+            <Button
+              className="
+      px-10 sm:px-14 py-3 sm:py-4
+      bg-gray-800 border-2 border-purple-400
+      text-white font-semibold tracking-wide rounded-xl
+      shadow-lg shadow-purple-400/30
+      transition-all duration-300 ease-out
+      hover:bg-gray-700 hover:scale-105 hover:shadow-purple-400/50
+      focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2
+    "
+            >
               Sign In with X
             </Button>
           </motion.div>
@@ -132,7 +132,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           animate={{
-            x: [0, 40, 0, -40, 0], 
+            x: [0, 40, 0, -40, 0],
             y: [0, -20, -40, -20, 0],
           }}
           transition={{
@@ -196,15 +196,13 @@ export default function Home() {
             )}
           </motion.div>
         </motion.div>
-
-        {/*TEST*/}
-
       </section>
+
+      
       <ServiceSection />
       <BrandSupport />
       <FAQ />
       <LogoMark />
-      <Footer />
     </>
   );
 }

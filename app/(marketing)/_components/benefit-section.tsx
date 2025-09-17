@@ -17,7 +17,7 @@ const BenefitSection = () => {
     <section className="w-full mt-12 mb-16 px-4 sm:px-6 lg:px-12">
       {/* Heading */}
       <motion.h1
-        className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-center leading-snug mb-12 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent font-chakra"
+        className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold uppercase leading-snug mb-12 bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent font-chakra"
         {...fadeUp(0.1)}
       >
         Benefits of Having the Black Pass

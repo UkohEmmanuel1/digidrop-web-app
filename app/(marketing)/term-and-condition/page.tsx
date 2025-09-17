@@ -50,7 +50,7 @@ const TermAndCondition = () => {
 
                             sodales. sed lobortis, Nullam placerat. viverra viverra nec amet, amet, nisi Ut commodo quis porta ex ex leo. tincidunt tincidunt Ut ex 
                         </p>
-                        <h3 className='font-semibold font-chakra py-2'>5. Privacy Policy</h3>
+                        <h3 id='Privacy Policy' className='font-semibold font-chakra py-2'>5. Privacy Policy</h3>
                         <p className="px-4 leading-6 tracking-tight">
                             adipiscing convallis. tempor Lorem tincidunt convallis. dolor tortor. tincidunt Ut quis scelerisque id vel diam placerat Nullam amet, massa lacus, quis malesuada massa quis tempor urna ex odio tincidunt. 
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Instagram } from 'lucide-react';
 import Link from 'next/link';
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
 
@@ -10,7 +9,7 @@ const Footer = () => {
                 <div className='flex md:flex-row flex-col justify-center text-center gap-6 text-gray-400'>
                     <p className="">COPYRIGHT 2025</p>
                     <Link href={"/term-and-condition"} className="">TERMS AND CONDITIONS</Link>
-                    <p className="">PRIVACY POLICY</p>
+                    <Link href={"/term-and-condition"} className=''>Privacy Policy</Link>
                 </div>
                 <div className='flex gap-4'>
                     <span>|</span>
