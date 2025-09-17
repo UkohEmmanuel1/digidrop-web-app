@@ -198,9 +198,50 @@ export default function Home() {
         </motion.div>
       </section>
 
-      
+      {/*Test*/}
+       <div className="w-full relative min-h-screen bg-[url('/assets/sky-bg.png')] clip-path-v bg-cover bg-center bg-no-repeat overflow-hidden">
+      {/* Astronaut */}
+      <Image
+        src="/assets/sky-2.png"
+        alt="Astronaut and UFO"
+        width={800}
+        height={600}
+        className="absolute"
+      />
+
+      {/* Daily Login */}
+      <div className="w-full md:w-1/2 flex flex-wrap gap-6 md:gap-12 px-6 md:px-12 lg:px-20 py-8 md:py-16 items-center justify-center md:justify-start">
+        <p className="text-white font-semibold">DAILY LOGIN</p>
+        <button className="mt-2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-md">
+          20 POINT
+        </button>
+      </div>
+
+      {/* Mint a Golden Pass */}
+      <div className="absolute top-28 right-1/3 bg-gradient-to-br from-blue-900 to-black rounded-xl shadow-lg p-4 text-center w-48">
+        <p className="text-white font-semibold">MINT A GOLDEN PASS</p>
+        <button className="mt-2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-md">
+          GET X5 OF ALL POINTS
+        </button>
+      </div>
+
+      {/* 30 Points */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-gradient-to-br from-blue-900 to-black rounded-xl shadow-lg p-4 text-center w-32">
+        <button className="bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-md">
+          30 POINTS
+        </button>
+      </div>
+
+      {/* We Have a Guest */}
+      <div className="absolute top-40 right-10 bg-gradient-to-br from-blue-900 to-black rounded-xl shadow-lg p-4 text-center w-40">
+        <p className="text-white font-semibold">WE HAVE A GUEST</p>
+        <button className="mt-2 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-md">
+          5 POINTS
+        </button>
+      </div>
+    </div>
       <ServiceSection />
-      <BrandSupport />
+      <BrandSupport />F
       <FAQ />
       <LogoMark />
     </>
