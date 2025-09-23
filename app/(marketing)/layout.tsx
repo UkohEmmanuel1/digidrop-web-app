@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "./_components/nav-bar";
-
 import Footer from "@/components/common/footer";
 export default function HomeLayout({
   children,

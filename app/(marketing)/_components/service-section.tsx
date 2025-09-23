@@ -45,13 +45,13 @@ const ServiceSection = () => {
 
               {/* Right Side (pushed down on large screens) */}
               <motion.div
-                className="flex flex-col items-center justify-center gap-6 text-center mt-8 lg:mt-24"
+                className="flex flex-col items-center justify-center gap-6 text-center mt-8 lg:mt-2 opacity-20"
                 {...fadeUp(0.3)}
               >
                 <motion.h1
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[120px] xl:text-[160px] bg-gradient-to-tr from-[#004AAD] via-[#665BC9] to-[#CB6CE6] bg-clip-text text-transparent font-extrabold font-chakra"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[120px] xl:text-[160px] bg-gradient-to-tr from-[#004AAD] via-[#665BC9] to-[#CB6CE6] bg-clip-text text-transparent font-extrabold font-chakra opacity-20 "
+                  initial={{ opacity: 20, scale: 0.8 }}
+                  whileInView={{ opacity: 20, scale: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
                   viewport={{ once: true }}
                 >
@@ -69,7 +69,7 @@ const ServiceSection = () => {
                     alt="brand"
                     width={350}
                     height={350}
-                    className="w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] xl:w-[350px] h-auto"
+                    className="w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] xl:w-[350px] h-auto opacity-20 "
                   />
                 </motion.div>
               </motion.div>

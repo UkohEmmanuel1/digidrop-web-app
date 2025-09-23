@@ -1,8 +1,6 @@
-import { Button } from "@/components/ui/button";
-import { Users, MessageCircle, Twitter, Github, Linkedin } from "lucide-react";
+import React from "react";
 
-
-const Index = () => {
+const Page = () => {
   return (
     <div className="min-h-screen bg-gradient-primary text-foreground">
       
@@ -221,4 +219,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Page;

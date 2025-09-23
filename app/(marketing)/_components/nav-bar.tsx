@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "-100%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            // put behind navbar but above page content
+            
             className="fixed top-[64px] left-0 w-full bg-[#0B0B0B] z-30 border-b border-gray-800 md:hidden"
           >
             <div className="flex flex-col px-6 py-6 space-y-4 items-end text-right">
