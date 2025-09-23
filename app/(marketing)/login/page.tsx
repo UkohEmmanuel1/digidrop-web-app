@@ -27,7 +27,7 @@ const Login = () => {
         }
     })
   return (
-    <div className='h-screen w-full relative'>
+    <div className='h-screen w-full relative bg-[url("/assets/bg.png")] bg-cover bg-center bg-no-repeat'>
         <div className="flex h-full justify-center items-center">
             <Card className='w-full max-w-2xl bg-gray-900  text-gray-200'>
                 <CardHeader>

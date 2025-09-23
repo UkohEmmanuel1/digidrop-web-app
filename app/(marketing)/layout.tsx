@@ -1,9 +1,6 @@
 import React from "react";
 import Navbar from "./_components/nav-bar";
-
-
-
-
+import Footer from "@/components/common/footer";
 export default function HomeLayout({
   children,
 }: Readonly<{
@@ -15,6 +12,7 @@ export default function HomeLayout({
       <main>
         {children}
       </main>
+      <Footer />
     </div>
   );
 }
