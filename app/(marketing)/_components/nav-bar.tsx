@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      {/* Navbar always visible */}
+      {/* Navbar */}
       <div className="w-full py-4 sticky top-0 z-40 bg-[#0B0B0B] text-gray-200">
         <div className="container mx-auto font-chakra flex justify-between items-center px-4">
           {/* Logo + Desktop Links */}
@@ -89,7 +89,6 @@ const Navbar: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "-100%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            
             className="fixed top-[64px] left-0 w-full bg-[#0B0B0B] z-30 border-b border-gray-800 md:hidden"
           >
             <div className="flex flex-col px-6 py-6 space-y-4 items-end text-right">
@@ -135,7 +134,7 @@ const Navbar: React.FC = () => {
             }}
           >
             <motion.div
-              className="bg-black rounded-lg p-6 w-full max-w-lg shadow-lg"
+              className="bg-[rgba(24,24,24,0.95)] text-white scroll-smooth rounded-lg p-6 w-full max-w-lg shadow-lg"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -143,13 +142,19 @@ const Navbar: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Dialog content */}
-              <h2 className="text-xl sm:text-2xl mb-4 leading-snug font-bold font-chakra text-center text-gray-300">
+              <h2 className="font-['Chakra_Petch'] font-bold text-[16px] leading-[24px] tracking-[0px] text-center  text-gray-300  mb-4">
                 WELCOME TO DIGIVERSE <br />
                 <span className="text-purple-400 block">This is BETA</span>
               </h2>
-              <p className="text-sm sm:text-md text-gray-300 font-chakra whitespace-pre-line leading-relaxed">
+
+              <p
+                className="text-gray-300 font-chakra whitespace-pre-line"
+                style={{ fontFamily: "Chakra Petch", fontWeight: 500, fontStyle: "normal", fontSize: "15px", lineHeight: "24px", letterSpacing: "0px",
+                }}
+              >
                 {`1. The Black pass is a Social FI platform accessible through a free soulbound NET, minable at the time of joining. On this platform, you'll undertake social quests and farm points to earn the DDR token airdrop, the official token of the DIGIDROP ecosystem. It all begins with Season1!, centred around DIGIDROP's upcoming game demo.`}
               </p>
+
               <div className="flex justify-end mt-6">
                 <button
                   className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"

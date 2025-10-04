@@ -49,9 +49,9 @@ const ServiceSection = () => {
                 {...fadeUp(0.3)}
               >
                 <motion.h1
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[120px] xl:text-[160px] bg-gradient-to-tr from-[#004AAD] via-[#665BC9] to-[#CB6CE6] bg-clip-text text-transparent font-extrabold font-chakra opacity-20 "
-                  initial={{ opacity: 20, scale: 0.8 }}
-                  whileInView={{ opacity: 20, scale: 1 }}
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[120px] xl:text-[160px] bg-gradient-to-tr from-[#004AAD] via-[#665BC9] to-[#CB6CE6] bg-clip-text text-transparent font-extrabold font-chakra opacity-10 "
+                  initial={{ opacity: 16, scale: 0.8 }}
+                  whileInView={{ opacity: 10, scale: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
                   viewport={{ once: true }}
                 >

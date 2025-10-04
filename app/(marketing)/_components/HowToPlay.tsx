@@ -8,8 +8,8 @@ const HowToPlay: React.FC = () => {
   const router = useRouter();
 
   return (
-    <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center px-4">
-      <div className="relative max-w-lg w-full bg-gray-600 text-white rounded-xl p-6 sm:p-8 shadow-xl">
+    <div className="fixed inset-0 bg-black z-50 flex items-center justify-center px-4">
+      <div className="relative max-w-lg w-full bg-black text-white rounded-xl p-6 sm:p-8 shadow-xl">
         {/* Close Button */}
         <button
           onClick={() => router.push("/")}
@@ -29,7 +29,7 @@ const HowToPlay: React.FC = () => {
         </div>
 
         {/* First Paragraph */}
-        <div className="text-gray-400 text-sm sm:text-base space-y-4">
+        <div className="text-gray-white text-xl sm:text-base space-y-4">
           <p>
             1. The Black Pass is a Social FI platform accessible through a free
             soulbound NFT, minable at the time of joining. On this platform,
@@ -39,16 +39,14 @@ const HowToPlay: React.FC = () => {
           </p>
         </div>
 
-        {/* Divider */}
-        <div className="my-6 border-t border-gray-700"></div>
-
+       
         {/* Subheading */}
         <h2 className="text-center font-semibold text-sm sm:text-base uppercase tracking-wide mb-4">
           Rules, Points, and Demo Game Playtest
         </h2>
 
         {/* Second Paragraph */}
-        <div className="text-gray-400 text-sm sm:text-base space-y-4">
+        <div className="text-gray-300 text-xl sm:text-base space-y-4">
           <p>
             1. The Black Pass is a Social FI platform accessible through a free
             soulbound NFT, minable at the time of joining. On this platform,
