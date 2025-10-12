@@ -1,9 +1,9 @@
-import React from "react";
 
-const Page = () => {
+const page = () => {
   return (
-    <div className="min-h-screen bg-gradient-primary text-foreground">
-      
+    <div className="min-h-screen bg-gray-900 text-foreground">
+         
+
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-6 pb-16">
         {/* Title Section */}
@@ -213,10 +213,8 @@ const Page = () => {
           </div>
         </section>
       </main>
-
-          
     </div>
   );
 };
 
-export default Page;
+export default page;
