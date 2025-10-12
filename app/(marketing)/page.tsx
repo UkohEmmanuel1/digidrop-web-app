@@ -3,7 +3,6 @@ import Image from "next/image";
 import React from "react";
 import InfoBox from "./_components/info-box";
 import ServiceSection from "./_components/service-section";
-import BenefitSection from "./_components/benefit-section";
 import BrandSupport from "./_components/brand-section";
 import FAQ from "./_components/faq-section";
 import LogoMark from "./_components/logo-mark";
