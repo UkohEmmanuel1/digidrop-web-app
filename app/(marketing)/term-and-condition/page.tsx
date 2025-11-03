@@ -13,9 +13,9 @@ const SECTIONS: TermSection[] = [
     id: 'agreements',
     title: '1. Agreements',
     content: [
-      'adipiscing convallis. tempor Lorem tincidunt convallis, dolor tortor. tincidunt Ut quis scelerisque id vel diam placerat Nullam amet, massa lacus, quis malesuada massa quis tempor urna ex odio tincidunt.',
-      'turpis eu consectetur tempor eu lacus faucibus lobortis, sit sed lorem. commodo elit non, quis commodo cursus massa odio non efficitur. tempor urna convallis, ultricies enim, dignissim, eget libero, tempor eu vehicula.',
-      'sodales, sed lobortis, Nullam placerat. viverra viverra nec amet, amet, nisi Ut commodo quis porta ex ex leo. tincidunt tincidunt Ut ex.'
+      'adipiscing convallis. tempor Lorem tincidunt convallis, dolor tortor...',
+      'turpis eu consectetur tempor eu lacus faucibus lobortis...',
+      'sodales, sed lobortis, Nullam placerat...'
     ],
   },
   {
@@ -74,9 +74,16 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="bg-gradient-to-b from-[#081A3A] to-[#0A1E4A] text-white min-h-screen scroll-smooth">
+    <main
+      className="text-white min-h-screen scroll-smooth"
+      style={{
+        background:
+          'linear-gradient(179.5deg, rgba(59, 31, 131, 0.3) 0.44%, rgba(0, 74, 173, 0.5) 49.67%, rgba(28, 28, 28, 0.75) 99.57%)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+      }}
+    >
       <div className="container mx-auto flex flex-col md:flex-row px-4 py-16">
-        
         {/* Sidebar */}
         <aside className="md:w-1/4 mb-12 md:mb-0">
           <nav className="sticky top-24">
@@ -102,7 +109,7 @@ export default function Page() {
         {/* Main Content */}
         <section className="md:w-3/4 md:pl-16 space-y-20">
           <h1 className="text-4xl md:text-5xl font-bold mb-12">
-            Term &amp; Condition
+            Terms &amp; Conditions
           </h1>
           {SECTIONS.map((section) => (
             <article key={section.id} id={section.id} className="space-y-6">

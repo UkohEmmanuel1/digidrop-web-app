@@ -49,10 +49,10 @@ const ServiceSection = () => {
                 {...fadeUp(0.3)}
               >
                 <motion.h1
-                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[120px] xl:text-[160px] bg-gradient-to-tr from-[#004AAD] via-[#665BC9] to-[#CB6CE6] bg-clip-text text-transparent font-extrabold font-chakra opacity-10 "
-                  initial={{ opacity: 16, scale: 0.8 }}
-                  whileInView={{ opacity: 10, scale: 1 }}
-                  transition={{ duration: 1, delay: 0.5 }}
+                  className="text-5xl sm:text-6xl md:text-7xl lg:text-[120px] xl:text-[160px] bg-gradient-to-tr from-[#004AAD] via-[#665BC9] to-[#CB6CE6] bg-clip-text text-transparent font-extrabold font-chakra opacity-20"
+                  initial={{ opacity: 0, y:40 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
                   viewport={{ once: true }}
                 >
                   $DDX
@@ -69,7 +69,7 @@ const ServiceSection = () => {
                     alt="brand"
                     width={350}
                     height={350}
-                    className="w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] xl:w-[350px] h-auto opacity-20 "
+                    className="w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] xl:w-[350px] h-auto opacity-20"
                   />
                 </motion.div>
               </motion.div>
