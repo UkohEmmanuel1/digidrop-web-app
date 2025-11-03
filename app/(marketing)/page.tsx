@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
-import InfoBox from "./_components/info-box";
+import Circular from "./_components/Circular";
 import ServiceSection from "./_components/service-section";
 import BenefitSection from "./_components/benefit-section";
 import BrandSupport from "./_components/brand-section";
@@ -126,82 +126,15 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-      <section className="w-full relative min-h-screen bg-[url('/assets/sky-bg.png')] clip-path-v bg-cover bg-center bg-no-repeat overflow-hidden">
-        {/* Circular Motion Image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          animate={{
-            x: [0, 40, 0, -40, 0],
-            y: [0, -20, -40, -20, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute -top-16 sm:-top-24 left-4 sm:left-16 z-0"
-        >
-          <Image
-            src="/assets/sky-2.png"
-            alt="second-image"
-            width={800}
-            height={500}
-            className="object-contain"
-            loading="lazy"
-          />
-        </motion.div>
 
-        {/* Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1 }}
-          className="relative container flex flex-col md:flex-row items-center justify-center p-6 md:p-12 max-w-6xl min-h-screen mx-auto z-10"
-        >
-          {/* Left Side */}
-          <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-full md:w-1/2 flex justify-center mb-8 md:mb-0"
-          >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <InfoBox msg="Invite a friend" />
-            </motion.div>
-          </motion.div>
 
-          {/* Right Side */}
-          <motion.div
-            initial={{ x: 50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="w-full md:w-1/2 flex flex-wrap gap-6 md:gap-12 px-6 md:px-12 lg:px-20 py-8 md:py-16 items-center justify-center md:justify-start"
-          >
-            {["Daily Login", "Perform a task", "Invite a friend"].map(
-              (msg, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{
-                    scale: 1.05,
-                    rotate: [0, -2, 2, 0],
-                    transition: { duration: 0.5 },
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <InfoBox msg={msg} />
-                </motion.div>
-              )
-            )}
-          </motion.div>
-        </motion.div>
-      </section>
+      <Circular />
+
+     
       
       <ServiceSection />
       <BrandSupport />
       <FAQ />
       <LogoMark />
-    </>
-  );
-}
+    </>)
+    }
