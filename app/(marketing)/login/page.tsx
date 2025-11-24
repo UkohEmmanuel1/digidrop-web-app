@@ -5,27 +5,18 @@ import React from 'react'
 import { useForm,  } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { signupSchema, UserSignupSchemaType } from '@/app/schema/auth';
-import Link from 'next/link';
+
 
 const Login = () => {
-    const form = useForm<UserSignupSchemaType>({
-        resolver: zodResolver(signupSchema),
-        defaultValues:{
-           email:"",
-           password:""
-        }
-    })
+    // const form = useForm<UserSignupSchemaType>({
+    //     resolver: zodResolver(signupSchema),
+    //     defaultValues:{
+    //        email:"",
+    //        password:""
+    //     }
+    // })
+   
   return (
     <div className='h-screen w-full relative bg-[url("/assets/bg.png")] bg-cover bg-center bg-no-repeat'>
         <div className="flex h-full justify-center items-center">
@@ -41,7 +32,7 @@ const Login = () => {
                              <p className="text-lg uppercase">Or</p>
                              <div className='w-[50%] h-1 bg-white border-white border-2'/>
                         </div>
-                        <Form {...form}>
+                        {/* <Form {...form}>
                             <form action="">
                                 <FormField
                                 control={form.control}
@@ -82,7 +73,7 @@ const Login = () => {
                                 </div>
 
                             </form>
-                        </Form> 
+                        </Form>  */}
                         <p className="text-xl font-medium text-center py-4 tracking-wide">Dont have an account? <a href="/signup" className='text-[#CB6CE6]'>SignUp</a></p>    
                     </CardContent>
                 </CardHeader>
