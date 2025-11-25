@@ -31,14 +31,14 @@ const FAQ = () => {
       };
   return (
     <section id='FAQs' className='max-w-4xl mx-auto mt-14 p-6'>
-        <h2 className="text-3xl font-bold text-center mb-6 text-white">Frequently Asked Questions</h2>
+        <h2 className="text-3xl font-bold text-start mb-6 text-white">Frequently Asked Questions</h2>
         <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div key={index} className="rounded-lg shadow-sm">
             {/* Accordion Header */}
             <div
               onClick={() => toggleAccordion(index)}
-              className="flex items-center justify-between w-full p-2 bg-[#1C1C1C] outline-none border-r-0 border-l-0 border-t-gray-100/50 border-t transition"
+              className="flex items-start justify-between w-full py-4 bg-[#1C1C1C] outline-none border-r-0 border-l-0 border-t-gray-100/50 border-t transition"
             >
               <span className="text-lg font-medium text-white">{faq.question}</span>
               <ChevronRight

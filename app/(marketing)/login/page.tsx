@@ -32,7 +32,7 @@ const Login = () => {
                              <p className="text-lg uppercase">Or</p>
                              <div className='w-[50%] h-1 bg-white border-white border-2'/>
                         </div>
-                        {/* <Form {...form}>
+                        <Form {...form}>
                             <form action="">
                                 <FormField
                                 control={form.control}
@@ -73,7 +73,7 @@ const Login = () => {
                                 </div>
 
                             </form>
-                        </Form>  */}
+                        </Form> 
                         <p className="text-xl font-medium text-center py-4 tracking-wide">Dont have an account? <a href="/signup" className='text-[#CB6CE6]'>SignUp</a></p>    
                     </CardContent>
                 </CardHeader>

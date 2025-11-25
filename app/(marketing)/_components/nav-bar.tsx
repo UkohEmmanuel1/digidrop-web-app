@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const [isBetaDialogOpen, setIsBetaDialogOpen] = useState(false);
+  const [isHowToPlayDialogOpen, setIsHowToPlayDialogOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
@@ -32,12 +33,12 @@ const Navbar: React.FC = () => {
 
             {/* Desktop Links */}
             <div className="hidden md:flex gap-6 font-medium">
-              <Link
-                href="/how-to-play"
+              <button
                 className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"
+                onClick={() => setIsHowToPlayDialogOpen(true)}
               >
                 How to Play
-              </Link>
+              </button>
               <Link href="#FAQs">FAQ</Link>
             </div>
           </div>
@@ -54,7 +55,7 @@ const Navbar: React.FC = () => {
               asChild
               className="rounded-lg px-6 py-2 bg-gray-900 border border-purple-400"
             >
-              <Link href="/login">Sign In</Link>
+              <Link href="/login">Connect Wellet</Link>
             </Button>
           </div>
 
@@ -92,13 +93,15 @@ const Navbar: React.FC = () => {
             className="fixed top-[64px] left-0 w-full bg-[#0B0B0B] z-30 border-b border-gray-800 md:hidden"
           >
             <div className="flex flex-col px-6 py-6 space-y-4 items-end text-right">
-              <Link
-                href="/how-to-play"
+              <button
                 className="text-gray-200 hover:text-white"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  setIsHowToPlayDialogOpen(true);
+                  setIsMenuOpen(false);
+                }}
               >
                 How to Play
-              </Link>
+              </button>
               <Link
                 href="#FAQs"
                 className="text-gray-200 hover:text-white"
@@ -128,10 +131,7 @@ const Navbar: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => {
-              setIsBetaDialogOpen(false);
-              router.push("/");
-            }}
+            onClick={() => setIsBetaDialogOpen(false)}
           >
             <motion.div
               className="bg-[rgba(24,24,24,0.95)] text-white scroll-smooth rounded-lg p-6 w-full max-w-lg shadow-lg"
@@ -141,27 +141,98 @@ const Navbar: React.FC = () => {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Dialog content */}
-              <h2 className="font-['Chakra_Petch'] font-bold text-[16px] leading-[24px] tracking-[0px] text-center  text-gray-300  mb-4">
+              <h2 className="font-['Chakra_Petch'] font-bold text-[16px] leading-[24px] text-center text-gray-300 mb-4">
                 WELCOME TO DIGIVERSE <br />
                 <span className="text-purple-400 block">This is BETA</span>
               </h2>
-
               <p
                 className="text-gray-300 font-chakra whitespace-pre-line"
-                style={{ fontFamily: "Chakra Petch", fontWeight: 500, fontStyle: "normal", fontSize: "15px", lineHeight: "24px", letterSpacing: "0px",
+                style={{
+                  fontFamily: "Chakra Petch",
+                  fontWeight: 500,
+                  fontStyle: "normal",
+                  fontSize: "15px",
+                  lineHeight: "24px",
                 }}
               >
-                {`1. The Black pass is a Social FI platform accessible through a free soulbound NET, minable at the time of joining. On this platform, you'll undertake social quests and farm points to earn the DDR token airdrop, the official token of the DIGIDROP ecosystem. It all begins with Season1!, centred around DIGIDROP's upcoming game demo.`}
+                {`1. The Black pass is a Social FI platform accessible through a free soulbound NFT, minable at the time of joining. On this platform, you'll undertake social quests and farm points to earn the DDR token airdrop, the official token of the DIGIDROP ecosystem. It all begins with Season1!, centred around DIGIDROP's upcoming game demo.`}
               </p>
-
               <div className="flex justify-end mt-6">
                 <button
                   className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                  onClick={() => {
-                    setIsBetaDialogOpen(false);
-                    router.push("/");
-                  }}
+                  onClick={() => setIsBetaDialogOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* How to Play Dialog */}
+      <AnimatePresence>
+        {isHowToPlayDialogOpen && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsHowToPlayDialogOpen(false)}
+          >
+            <motion.div
+              className="bg-[rgba(24,24,24,0.95)] text-white scroll-smooth rounded-lg p-6 w-full max-w-lg shadow-lg max-h-[90vh] overflow-y-auto"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Heading */}
+              <div className="text-center mb-6">
+                <h1 className="text-xl sm:text-2xl md:text-2xl font-extrabold bg-gradient-to-r from-[#ffffff] to-[#aaa] bg-clip-text text-transparent">
+                  Welcome to Black Pass Season 1 We’re excited to have you here!
+                </h1>
+                <p className="text-sm sm:text-base text-gray-400 mt-2">
+                  
+                </p>
+              </div>
+
+              {/* Introduction */}
+              <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4 mb-8">
+                <p>
+                  <strong>1.</strong> The Black Pass is a SocialFi platform accessible
+                  through a free soulbound NFT, minable at the time of joining. On this
+                  platform, you’ll undertake social quests and farm points to earn the DDR
+                  token airdrop, the official token of the DIGIDROP ecosystem.
+                </p>
+                <p>
+                  It all begins with Season 1, centered around DIGIDROP’s upcoming
+                  game demo.
+                </p>
+              </div>
+
+              {/* Subheading */}
+              <h2 className="text-center font-semibold text-sm sm:text-base uppercase tracking-wider text-gray-200 mb-4">
+                Rules, Points, and Demo Game Playtest
+              </h2>
+
+              {/* Rules Section */}
+              <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
+                <p>
+                  <strong>1.</strong> The Black Pass is a Social FI platform accessible
+                  through a free soulbound NFT, minable at the time of joining. On this
+                  platform, you’ll undertake social quests and farm points to earn the DDR
+                  token airdrop, the official token of the DIGIDROP ecosystem. It all
+                  begins with Season 1!, centred around DIGIDROP’s upcoming game demo.
+                </p>
+              </div>
+
+              {/* Close Button */}
+              <div className="flex justify-end mt-6">
+                <button
+                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                  onClick={() => setIsHowToPlayDialogOpen(false)}
                 >
                   Close
                 </button>

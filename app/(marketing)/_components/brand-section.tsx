@@ -36,7 +36,7 @@ const BrandSupport = () => {
               key={index}
               src={logo}
               alt={`Brand ${index + 1}`}
-              className="h-14 object-contain grayscale hover:grayscale-0 transition"
+              className="h-14 object-contain grayscale hover:grayscale-0 transition my-4"
             />
           ))}
         </div>
