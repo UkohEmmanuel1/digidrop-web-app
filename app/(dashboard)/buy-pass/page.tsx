@@ -1,33 +1,12 @@
 import React from 'react'
 import MintPass from '../_components/dashboard/card-pass-select'
+import { getDigiPasses } from '@/app/data/digi-pass/pass'
+import { DigiPass } from '@/types/response-type'
 
 
-const card_pass = [
-    {
-        id: "48dgkj93",
-        card_img: "/assets/black.png",
-        name: "Mint Black Pass",
-        price: 2,
-        point: "2x"
-    },
-    {
-        id: "jhhsd485",
-        card_img: "/assets/gold.png",
-        name: "Mint Gold Pass",
-        price: 10,
-        point: "8x"
-    },
-    {
-        id: "eu3094a0",
-        card_img: "/assets/white.png",
-        name: "Mint White Pass",
-        price: 5,
-        point: "4x"
-    },
-    
 
-]
-const BuyPage = () => {
+const BuyPage = async () => {
+    const digi_passes = await getDigiPasses();
   return (
     <div className='w-full min-h-screen bg-gradient-to-b from-[#3B1F834D] to-[#004AAD80]'>
         <div className='container flex  flex-col items-center text-white py-10'>
@@ -35,7 +14,7 @@ const BuyPage = () => {
                 <p className="text-lg leading-3 tracking-wide font-medium font-chakra">Select Your Mint <span className='text-brandColor'>soul-bound NFT</span>  pass</p>
 
                 <div className="flex flex-col md:flex-row  w-full md:max-w-4xl mt-10 items-center gap-6">
-                        {card_pass.map((card, idx)=>{
+                        {digi_passes.map((card:DigiPass, idx: number)=>{
                             return (
                                 <MintPass data={card} key={idx}/>
                             )
