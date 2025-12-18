@@ -23,10 +23,10 @@ const Navbar: React.FC = () => {
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center">
               <Image
-                src="/assets/logo.png"
+                src="/assets_icon/25.png"
                 alt="Digi Drop Logo"
-                width={54}
-                height={48}
+                width={80}
+                height={80}
                 priority
               />
             </Link>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: "-100%", opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed top-[64px] left-0 w-full bg-[#0B0B0B] z-30 border-b border-gray-800 md:hidden"
+            className="fixed top-[64px] left-0 w-full bg-[#24222288] z-30 border-b border-gray-800 md:hidden"
           >
             <div className="flex flex-col px-6 py-6 space-y-4 items-end text-right">
               <button
@@ -142,8 +142,8 @@ const Navbar: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="font-['Chakra_Petch'] font-bold text-[16px] leading-[24px] text-center text-gray-300 mb-4">
-                WELCOME TO DIGIVERSE <br />
-                <span className="text-purple-400 block">This is BETA</span>
+                Beta Horizon 
+                <span className="text-purple-400 block">Pioneer the Unknown.</span>
               </h2>
               <p
                 className="text-gray-300 font-chakra whitespace-pre-line"
@@ -155,11 +155,11 @@ const Navbar: React.FC = () => {
                   lineHeight: "24px",
                 }}
               >
-                {`1. The Black pass is a Social FI platform accessible through a free soulbound NFT, minable at the time of joining. On this platform, you'll undertake social quests and farm points to earn the DDR token airdrop, the official token of the DIGIDROP ecosystem. It all begins with Season1!, centred around DIGIDROP's upcoming game demo.`}
+                {`You are among the first to gaze upon this evolving galaxy. As beta voyagers, your discoveries refine the stars. Launch Bonus: Mint your Passport today to lock in your Stardust Multiplier before the galaxy expands.`}
               </p>
               <div className="flex justify-end mt-6">
                 <button
-                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                  className="px-4 py-2 bg-purple-400 rounded hover:bg-purple-600"
                   onClick={() => setIsBetaDialogOpen(false)}
                 >
                   Close
@@ -188,50 +188,61 @@ const Navbar: React.FC = () => {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Heading */}
-              <div className="text-center mb-6">
-                <h1 className="text-xl sm:text-2xl md:text-2xl font-extrabold bg-gradient-to-r from-[#ffffff] to-[#aaa] bg-clip-text text-transparent">
-                  Welcome to Black Pass Season 1 We’re excited to have you here!
-                </h1>
-                <p className="text-sm sm:text-base text-gray-400 mt-2">
-                  
-                </p>
-              </div>
+             {/* Heading */}
+<div className="text-center mb-6">
+  <h1 className="text-xl sm:text-2xl md:text-2xl font-extrabold bg-purple-600 bg-clip-text text-transparent">
+    <span className="block">Welcome to Digiverse</span>
+  </h1>
 
-              {/* Introduction */}
-              <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4 mb-8">
-                <p>
-                  <strong>1.</strong> The Black Pass is a SocialFi platform accessible
-                  through a free soulbound NFT, minable at the time of joining. On this
-                  platform, you’ll undertake social quests and farm points to earn the DDR
-                  token airdrop, the official token of the DIGIDROP ecosystem.
-                </p>
-                <p>
-                  It all begins with Season 1, centered around DIGIDROP’s upcoming
-                  game demo.
-                </p>
-              </div>
+  {/* Chart Your Course Intro */}
+  <p className="text-sm sm:text-base text-gray-400 mt-3 max-w-2xl mx-auto">
+    <span className="font-semibold text-gray-200 block mb-1">
+      Chart Your Course
+    </span>
+    Your odyssey begins with a single spark. Follow this celestial path to
+    enter the Digi Drop ecosystem.
+  </p>
+</div>
 
-              {/* Subheading */}
-              <h2 className="text-center font-semibold text-sm sm:text-base uppercase tracking-wider text-gray-200 mb-4">
-                Rules, Points, and Demo Game Playtest
-              </h2>
 
-              {/* Rules Section */}
-              <div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-4">
-                <p>
-                  <strong>1.</strong> The Black Pass is a Social FI platform accessible
-                  through a free soulbound NFT, minable at the time of joining. On this
-                  platform, you’ll undertake social quests and farm points to earn the DDR
-                  token airdrop, the official token of the DIGIDROP ecosystem. It all
-                  begins with Season 1!, centred around DIGIDROP’s upcoming game demo.
-                </p>
-              </div>
+{/* Steps Section */}
+<div className="text-gray-300 text-sm sm:text-base leading-relaxed space-y-5 max-w-3xl mx-auto mb-10">
+  <p>
+    <strong>Step 1: Signal (Awaken Your Comms)</strong><br />
+    Connect your wallet (Metamask or Trust Wallet) and switch your network to
+    BNB Smart Chain (BEP20).
+  </p>
+
+  <p>
+    <strong>Step 2: Supply (Select Your Engine)</strong><br />
+    Choose your speed. Mint a Void (1x), Starlight (2x), or Solar (4x) Passport.
+    Higher tiers gather Stardust faster.
+  </p>
+
+  <p>
+    <strong>Step 3: Action (Embark on Quests)</strong><br />
+    Dive into captivating challenges that spark creativity and community
+    spirit.
+  </p>
+
+  <p>
+    <strong>Step 4: Ascension (Rise in Rank)</strong><br />
+    Watch your Stardust shine among the brightest explorers in the universe.
+  </p>
+
+  <p>
+    <strong>Step 5: Expansion (Summon Allies)</strong><br />
+    Share your referral beacon to guide others, weaving a richer tapestry of
+    shared discovery.
+  </p>
+</div>
+
+
 
               {/* Close Button */}
               <div className="flex justify-end mt-6">
                 <button
-                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                  className="px-4 py-2 bg-purple-400 rounded hover:bg-purple-600"
                   onClick={() => setIsHowToPlayDialogOpen(false)}
                 >
                   Close

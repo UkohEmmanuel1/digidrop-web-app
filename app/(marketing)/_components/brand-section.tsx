@@ -1,6 +1,5 @@
-import Image from 'next/image'
-import React from 'react'
-
+import Image from "next/image"
+import React from "react"
 
 const brands = [
   "/assets/brands/brand-1.png",
@@ -15,31 +14,32 @@ const brands = [
   "/assets/brands/brand-10.png",
   "/assets/brands/brand-11.png",
   "/assets/brands/brand-12.png",
-  "/assets/brands/brand-13.png",
-  "/assets/brands/brand-14.png",
-  "/assets/brands/brand-15.png",
-  "/assets/brands/brand-17.png",
-  "/assets/brands/brand-18.png",
-  "/assets/brands/brand-16.png",
-
-  
 ]
+
 const BrandSupport = () => {
   return (
-    <section className='container mx-auto h-full relative bg-[#1C1C1C] py-12 mt-8  mb-8'>
-        <h1 className='text-4xl text-center font-chakra font-bold uppercase text-white'>EXPANDING OUR REACH THROUGH STRATEGIC PARTNERSHIPS WITH PREMIUM PATRNER</h1>
-        <div className="grid grid-cols-2 pt-10 md:grid-cols-3 lg:grid-cols-6 gap-8 place-items-center">
+    <section className="w-full bg-[#1C1C1C] py-24">
+      {/* Container */}
+      <div className="mx-auto w-fit px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
+        {/* Heading */}
+        <h1 className="mb-16 text-center text-3xl font-bold uppercase text-white sm:text-4xl md:text-5xl font-chakra">
+          EXPANDING OUR REACH THROUGH STRATEGIC PARTNERSHIPS
+        </h1>
 
-            {/* IMAGES */}
-            {brands.map((logo, index) => (
-            <img
+        {/* Brands Grid */}
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 place-items-center">
+          {brands.map((logo, index) => (
+            <Image
               key={index}
               src={logo}
               alt={`Brand ${index + 1}`}
-              className="h-14 object-contain grayscale hover:grayscale-0 transition my-4"
+              width={160}
+              height={64}
+              className="h-16 w-auto object-contain grayscale hover:grayscale-0 transition duration-300"
             />
           ))}
         </div>
+      </div>
     </section>
   )
 }

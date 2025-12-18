@@ -51,9 +51,9 @@ export default function Circular() {
               >
                 <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">MINT A GOLDEN PASS</h2>
                 <button
-                  className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 bg-[rgba(161,118,214,0.8)]
+                  className="px-4 sm:px-6 md:px-8 py-2 sm:py-3 bg-[rgba(161,118,214,1)]
                     border border-white/30 text-gray-100 text-sm sm:text-base md:text-lg font-semibold
-                    rounded-xl shadow-lg backdrop-blur-md hover:bg-[rgba(161,118,214,1)]
+                    rounded-xl shadow-lg backdrop-blur-md hover:bg-[rgba(109,87,14,0.8)]
                     hover:scale-105 transition-all duration-300 ease-out"
                 >
                   GET XS OF ALL POINTS
@@ -86,7 +86,7 @@ export default function Circular() {
             <div className="bg-[linear-gradient(203.64deg,#181818_9.95%,#004AAD_50.53%,#191818_90.05%)]
               text-white p-4 sm:p-6 md:p-8 rounded-tl-[2rem] rounded-br-[2rem] shadow-lg
               transform hover:-translate-y-3 md:hover:-translate-y-6
-              transition-transform duration-300 ease-out w-full max-w-[90%] sm:max-w-[80%] md:max-w-sm text-center mx-auto"
+              transition-transform duration-300 ease-out w-full max-w-fit sm:max-w-fit md:max-w-sm text-center mx-auto"
             >
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-4">WE HAVE A GUEST</h2>
               <button
