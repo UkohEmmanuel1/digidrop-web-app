@@ -11,37 +11,55 @@ import {
 const Footer = () => {
   return (
     <footer className="w-full mt-8 shadow-lg shadow-slate-300">
-      
+
       {/* Top Footer Row */}
-      <div className="flex justify-center py-4">
-        <div className="flex items-center gap-10 text-gray-200 max-w-5xl flex-nowrap whitespace-nowrap">
+      <div className="flex justify-center py-4 px-4">
+        <div
+          className="
+            flex flex-col gap-6 text-gray-200
+            md:flex-row md:items-center md:justify-between
+            max-w-6xl w-full
+          "
+        >
 
           {/* Text links */}
-          <div className="flex items-center gap-6 text-gray-400">
-            <p>COPYRIGHT {new Date().getFullYear()}</p>
+          <div
+            className="
+              flex flex-col gap-3 text-gray-400 text-sm
+              md:flex-row md:items-center md:gap-6
+              text-center md:text-left
+            "
+          >
+            <p>© {new Date().getFullYear()}</p>
 
-            <Link href="/term-and-condition">
+            <Link href="/term-and-condition" className="hover:text-white transition">
               TERMS AND CONDITIONS
             </Link>
 
-            <Link href="/term-and-condition">
+            <Link href="/term-and-condition" className="hover:text-white transition">
               PRIVACY POLICY
             </Link>
           </div>
 
           {/* Middle section */}
-          <div className="flex items-center gap-4 text-gray-400">
-            <span>|</span>
-
-            <Link href="/whitepaper">
+          <div
+            className="
+              flex flex-col gap-2 text-gray-400 text-sm
+              md:flex-row md:items-center md:gap-4
+              text-center
+            "
+          >
+            <Link href="/whitepaper" className="hover:text-white transition">
               WHITEPAPER
             </Link>
+
+            <span className="hidden md:inline">|</span>
 
             <p>VISIT DIGIDROP</p>
           </div>
 
           {/* Social icons */}
-          <div className="flex items-center gap-6">
+          <div className="flex justify-center gap-6">
             <Link href="https://twitter.com/yourhandle" target="_blank">
               <FaTwitter className="text-xl hover:text-blue-400 transition" />
             </Link>
@@ -70,7 +88,7 @@ const Footer = () => {
       <div className="w-full h-px bg-gray-800" />
 
       {/* Disclaimer */}
-      <div className="px-6 py-4 text-center text-gray-400 leading-relaxed max-w-6xl mx-auto">
+      <div className="px-4 py-4 text-center text-gray-400 text-sm leading-relaxed max-w-6xl mx-auto">
         Disclaimer: DigiDrop Soulbound Tokens (SBTs) are non-transferable digital
         utility credentials used for platform access and identity. They have no
         market value, cannot be resold, and strictly represent membership within

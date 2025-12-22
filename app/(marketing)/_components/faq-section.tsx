@@ -40,11 +40,11 @@ const FAQ = () => {
   }
 
   return (
-    <section id="FAQs" className="w-full py-28">
+    <section id="FAQs" className="w-full py-12">
       {/* Container */}
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
         {/* Heading */}
-        <h2 className="mb-8 text-left text-3xl font-bold text-white sm:text-4xl">
+        <h2 className="mb-8 text-center text-3xl font-bold text-white sm:text-4xl">
           Frequently Asked Questions
         </h2>
 

@@ -124,7 +124,7 @@ const BenefitSection: React.FC = () => {
         </motion.h1>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 place-items-center">
           {cards.map((card, index) => (
             <BCard
               key={index}
