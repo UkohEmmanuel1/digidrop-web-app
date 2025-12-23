@@ -2,28 +2,43 @@ import { useAccount, useConnect, useSignMessage, useSwitchChain } from 'wagmi';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button'; // Assuming Shadcn UI or similar
 import { toast } from 'sonner';
-import { getNonce, getProfile, walletLogin } from '@/actions/user';
-import { useRouter } from 'next/navigation';
+import { getNonce,  walletLogin } from '@/actions/user';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useUserStore } from '@/store/useUserProfile';
+import { getProfile } from '@/app/data/profile/profile';
 
 export default function WalletLoginButton() {
   const router = useRouter()
+  const searchParams = useSearchParams();
   const { address, isConnected, chain } = useAccount();
-  const { connect, connectors } = useConnect();
+  const { connectAsync, connectors } = useConnect();
   const { signMessageAsync } = useSignMessage();
   const { switchChain } = useSwitchChain();
   const [loading, setLoading] = useState(false);
-
+  const { setProfile } = useUserStore();
+  const refCode = searchParams.get('ref') || undefined;
   const handleLogin = async () => {
     setLoading(true);
+    
     try {
-      if (!isConnected) {
-        const injectedConnector = connectors.find(c => c.id === 'injected');
-        if (injectedConnector) {
-          await connect({ connector: injectedConnector });
-        } else {
+      let userAddress = address;
+
+      const injectedConnector = connectors.find(c => c.id === 'injected');
+
+      if (!userAddress) {
+        if (!injectedConnector) {
           toast.error('No wallet detected. Install MetaMask or use WalletConnect.');
           return;
         }
+
+        const result = await connectAsync({ connector: injectedConnector });
+        userAddress = result.accounts[0];
+      }
+
+      console.log("user address:", userAddress)
+      if (!userAddress) {
+        toast.error('Wallet not connected');
+        return;
       }
 
       // Step 2: Ensure BSC chain (testnet for dev, mainnet for prod)
@@ -39,17 +54,18 @@ export default function WalletLoginButton() {
       const signature = await signMessageAsync({ message });
 
       // Step 5: POST to backend for verification
-    
-      if (address) {
-         await walletLogin(address, signature)
-      }else{
-        toast.error('Wallet login failed');
-        return;
-      }
       
-      // Step 6: Check for existing pass and redirect
+    
+         if (refCode) {
+           await walletLogin(userAddress, signature, nonce, refCode);
+        } else {
+          await walletLogin(userAddress, signature, nonce); // no referral
+        }
+      
+       // pass the profile details to zustand store
       const profile = await getProfile()
-      //https://digidrop.xyz/walletlogin?ref=${profile.referral_code}
+      setProfile(profile);
+      //https://digidrop.xyz/login?ref=${profile.referral_code}
       
       if (profile.has_pass) {
          router.replace('/dashboard');

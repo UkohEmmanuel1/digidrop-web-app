@@ -1,6 +1,7 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import { string } from 'zod';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
 interface InfoProp {
@@ -9,11 +10,13 @@ interface InfoProp {
         text?: string
         score?: number
         midText?: string
-        value: number
-    }
+        value?: number | string
+    },
+    isLoading: boolean
 }
-const InfoCard = ({data}:InfoProp) => {
+const InfoCard = ({data, isLoading}:InfoProp) => {
     const {icon:Icon, text, score, midText, value}=data
+    if (isLoading) return <Skeleton className='w-[640px] h=[78px] bg-gray-700 rounded-sm ' />;
   return (
     <div className='w-[80%] md:w-[640px] flex justify-between mb-5 px-6 items-center h-[80px] shadow-sm border bg-[#333333]'>
         <div className='flex gap-5 items-center'>

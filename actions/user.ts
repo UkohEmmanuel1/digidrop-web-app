@@ -6,30 +6,40 @@ import { setRefreshToken, setToken } from "@/lib/auth";
 
 export async function getNonce() {
     try {
-        const res = await apiClient.get('/login');
+        const res = await apiClient.get('/login', { withCredentials: true });
         return res.data
     } catch (error) {
         throw error || new Error("Nonce failed'")
     }
 }
 
-export async function walletLogin(walletAddress: string, signature: string, ref?:string) {
+export async function walletLogin(walletAddress: string, signature: string, nonce: string, ref?:string) {
+  const payload: any = {
+  walletAddress,
+  signature,
+  nonce
+};
+
+if (ref) payload.preferral = ref;
+console.log("login payload:", payload)
   try {
-    const { data } = await apiClient.post('/login', { walletAddress, signature }); // Use apiClient here
+    const { data } = await apiClient.post('/login', payload, { withCredentials: true }); // Use apiClient here
     await setToken(data.token); // Assuming you have setRefreshToken too if needed
     await setRefreshToken(data.refresh);
     return data;
-  } catch (error) {
+  } catch (error: any) {
+    console.error('walletLogin error:', error.response?.data || error);
     throw new Error('Login failed');
   }
 }
 
-export async function getProfile(){
-   try {
-       const response = await apiClient.get('/profile')
-       return response.data
-   } catch (error) {
-      console.log("something went error: api error")
-     throw error
-   }
-}
+// export async function getProfile(){
+//    try {
+//         await loginRequired()
+//        const response = await apiClient.get('/profile')
+//        return response.data
+//    } catch (error) {
+//       console.log("something went error: api error")
+//      throw error
+//    }
+// }
