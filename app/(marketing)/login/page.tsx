@@ -1,5 +1,4 @@
-"use client"
-
+'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import React from 'react'
 import WalletLoginButton from '@/components/common/WalletConnect'
@@ -13,17 +12,19 @@ const Login = () => {
                 <CardHeader>
                     <CardTitle className='text-center text-2xl uppercase font-chakra'>WELcome to  DiGiVerse</CardTitle>
                     <CardContent>
-                        <div className='w-full px-8 py-3 flex items-center'>
-                            <WalletLoginButton />
-                        </div>
+                   
+                      <div className="text-center">
+                          <WalletLoginButton />
+                        <p className="mt-4 text-gray-500 text-sm">
+                          Connect your wallet for secure login
+                        </p>
+                      </div>
                     </CardContent>
                 </CardHeader>
-            </Card>
-
-        </div>
-        Login
+            </Card>      
+      </div>
     </div>
-  )
+  );
 }
 
 export default Login
