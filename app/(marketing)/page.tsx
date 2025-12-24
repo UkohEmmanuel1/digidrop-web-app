@@ -8,8 +8,10 @@ import ServiceSection from "./_components/service-section";
 import BrandSupport from "./_components/brand-section";
 import FAQ from "./_components/faq-section";
 import LogoMark from "./_components/logo-mark";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router=useRouter()
   return (
     <>
       {" "}
@@ -107,6 +109,7 @@ export default function Home() {
             className="flex justify-center"
           >
             <Button
+              onClick={()=> router.push("/login")}
               className="
       px-10 sm:px-14 py-3 sm:py-4
       bg-gray-800 border-2 border-purple-400
