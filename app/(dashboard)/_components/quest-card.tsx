@@ -1,5 +1,5 @@
 "use client"
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   Tabs,
   TabsContent,
@@ -9,27 +9,27 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import NoteCard from './dashboard/note-card';
 import QuestTable from './dashboard/quest-table';
+import { useTasks } from '@/hooks/useTasks';
+import { TaskSkeleton } from './dashboard/taskSkeleton';
 
-const quest_data = [
-        { icon: "twitter", task: "twitter@example.com", point: 5, url: "https://futurexpay.com"},
-        { icon: "instagram", task: "insta@example.com", point: 7, url: "https://futurexpay.com" },
-        { icon: "discord",  task: "fb@example.com", point: 10, url: "https://futurexpay.com" },
-]
-const quest2_data = [
-        { icon: "user", task: "follow user ", point: 5, url: "https://futurexpay.com"},
-        { icon: "instagram", task: "insta@example.com", point: 7, url: "https://futurexpay.com" },
-        { icon: "discord",  task: "fb@example.com", point: 10, url: "https://futurexpay.com" },
-]
+// const quest_data = [
+//         { icon: "twitter", title: "twitter@example.com", points: 5, external_link: "https://futurexpay.com"},
+//         { icon: "instagram", title: "insta@example.com", points: 7, external_link: "https://futurexpay.com" },
+//         { icon: "discord",  title: "fb@example.com", points: 10, external_link: "https://futurexpay.com" },
+// ]
+
 
 
 const TaskQuest = () => {
+  const { data, isLoading } = useTasks();
+  
+  if (isLoading) {
+    return <TaskSkeleton />;
+  }
   return (
      <Tabs defaultValue="allQuest" className="w-full max-w-3xl mx-auto mt-10">
       <TabsList className=" text-white w-full uppercase font-chakra bg-transparent mb-4">
-        <TabsTrigger value="allQuest" className='text-xl uppercase data-[state=active]:bg-transparent data-[state=active]:text-brandColor'>All Mission</TabsTrigger>
-        <TabsTrigger value="pending" className='text-xl uppercase data-[state=active]:bg-transparent data-[state=active]:text-brandColor'>Pending</TabsTrigger>
-        <TabsTrigger value="unclaimed" className='text-xl uppercase data-[state=active]:bg-transparent data-[state=active]:text-brandColor'>UnClaimed</TabsTrigger>
-        <TabsTrigger value="claimed" className='text-xl uppercase data-[state=active]:bg-transparent data-[state=active]:text-brandColor'>Claimed</TabsTrigger>
+        <TabsTrigger value="allQuest" className='text-xl uppercase data-[state=active]:bg-transparent data-[state=active]:text-brandColor'>All Mission</TabsTrigger>    
       </TabsList>
 
       <TabsContent value="allQuest">
@@ -38,13 +38,12 @@ const TaskQuest = () => {
             <NoteCard />
           </CardHeader>
           <CardContent>
-                <QuestTable data={quest_data}/>
-                <h2 className='font-chakra text-xl py-2 leading-6'>One Time Quest</h2>
-                <QuestTable data={quest2_data} type='onetime'/>
+                
+                  <QuestTable data={data}/>        
           </CardContent>
         </Card>
       </TabsContent>
-
+{/* 
       <TabsContent value="pending">
         <Card>
           <CardHeader>
@@ -76,7 +75,7 @@ const TaskQuest = () => {
             <p>This is the settings content. Preferences, toggles, forms, etc. go here.</p>
           </CardContent>
         </Card>
-      </TabsContent>
+      </TabsContent> */}
     </Tabs>
   )
 }

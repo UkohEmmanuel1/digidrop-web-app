@@ -1,5 +1,5 @@
 "use client"
-import { useGetLeaderboardStats } from '@/types/hooks/useGetLeaderBoard'
+import { useGetLeaderboardStats } from '@/hooks/useGetLeaderBoard'
 import React from 'react'
 
 type LeaderBoard={

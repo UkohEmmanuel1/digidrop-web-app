@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import DailySpinCard from '../daily-spin-card';
 import TaskQuest from '../quest-card';
 import { useUserStore } from '@/store/useUserProfile';
-import { useProfileStats } from '@/types/hooks/useGetProfileStats';
+import { useProfileStats } from '@/hooks/useGetProfileStats';
 import { useRouter } from 'next/navigation';
 
 

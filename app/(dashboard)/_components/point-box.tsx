@@ -1,6 +1,6 @@
 "use client"
 import { Skeleton } from '@/components/ui/skeleton';
-import { useProfileStats } from '@/types/hooks/useGetProfileStats';
+import { useProfileStats } from '@/hooks/useGetProfileStats';
 import React from 'react'
 
 

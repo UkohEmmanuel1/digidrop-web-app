@@ -1,7 +1,7 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { useUserStore } from '@/store/useUserProfile'
-import { useProfileStats } from '@/types/hooks/useGetProfileStats'
+import { useProfileStats } from '@/hooks/useGetProfileStats'
 import { CircleUser, Copy } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
