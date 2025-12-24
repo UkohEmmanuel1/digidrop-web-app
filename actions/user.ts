@@ -33,13 +33,26 @@ console.log("login payload:", payload)
   }
 }
 
-// export async function getProfile(){
-//    try {
-//         await loginRequired()
-//        const response = await apiClient.get('/profile')
-//        return response.data
-//    } catch (error) {
-//       console.log("something went error: api error")
-//      throw error
-//    }
-// }
+
+type RequestPayload={
+  names: string
+  email: string
+}
+
+export async function updateProfile(payload:RequestPayload) {
+   try {
+    const response = await apiClient.patch('/update-profile', payload);
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      'Update profile failed:',
+      error?.response?.data || error
+    );
+
+    throw new Error(
+      error?.response?.data?.detail ||
+      error?.response?.data?.error ||
+      'Failed to update profile'
+    );
+  }
+}

@@ -10,7 +10,7 @@ async function fetchLeaderboardStats() {
 
 export function useGetLeaderboardStats() {
   return useQuery({
-    queryKey: ['leadrboard-stats'],
+    queryKey: ['leaderboard-stats'],
     queryFn: fetchLeaderboardStats,
     refetchInterval: 60_000,
   });

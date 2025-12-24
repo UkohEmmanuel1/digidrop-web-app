@@ -29,3 +29,14 @@ export interface DigiPass {
   card: string;
   bnb_price: number;
 }
+
+export interface TaskResponse {
+  id: number
+  icon: string,
+  title: string, 
+  points: number,
+  external_link: string
+  task_type?: 'on_site' | 'off_site',
+  is_active: boolean
+  user_status: 'pending' | 'started' | 'completed';
+}
