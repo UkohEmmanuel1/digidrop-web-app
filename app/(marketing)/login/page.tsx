@@ -1,30 +1,11 @@
-'use client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import React from 'react'
-import WalletLoginButton from '@/components/common/WalletConnect'
+import { Suspense } from "react";
+import LoginClient from "../_components/LoginClient";
 
 
-const Login = () => {   
+export default function LoginPage() {
   return (
-    <div className='h-screen w-full relative bg-[url("/assets/bg.png")] bg-cover bg-center bg-no-repeat'>
-        <div className="flex h-full justify-center items-center">
-            <Card className='w-full max-w-2xl bg-gray-900  text-gray-200'>
-                <CardHeader>
-                    <CardTitle className='text-center text-2xl uppercase font-chakra'>WELcome to  DiGiVerse</CardTitle>
-                    <CardContent>
-                   
-                      <div className="text-center">
-                          <WalletLoginButton />
-                        <p className="mt-4 text-gray-500 text-sm">
-                          Connect your wallet for secure login
-                        </p>
-                      </div>
-                    </CardContent>
-                </CardHeader>
-            </Card>      
-      </div>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginClient />
+    </Suspense>
   );
 }
-
-export default Login

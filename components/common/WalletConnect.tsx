@@ -1,3 +1,4 @@
+"use client"
 import { useAccount, useConnect, useSignMessage, useSwitchChain } from 'wagmi';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button'; // Assuming Shadcn UI or similar
