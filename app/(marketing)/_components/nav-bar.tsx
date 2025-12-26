@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
               asChild
               className="rounded-lg px-6 py-2 bg-gray-900 border border-purple-400"
             >
-              <Link href="/login">Connect Wellet</Link>
+              <Link href="/login">Login with Wallet</Link>
             </Button>
           </div>
 
@@ -66,7 +66,7 @@ const Navbar: React.FC = () => {
               size="sm"
               className="rounded-lg px-4 py-1 bg-gray-900 border border-purple-400"
             >
-              <Link href="/login">Sign In</Link>
+              <Link href="/login">Login</Link>
             </Button>
             <button
               aria-label="Toggle menu"

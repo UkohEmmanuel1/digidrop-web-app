@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import {  Chakra_Petch } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
-import RootProviders from "@/providers/RootProviders";
+import ClientProviders from "@/providers/ClientProviders";
+
+
+
 
 const chakra = Chakra_Petch({
   variable: "--font-chakra-petch",
@@ -29,9 +32,9 @@ export default function RootLayout({
         className={`${chakra.variable} antialiased bg-[#1C1C1C]`}
       >
         <Toaster position="bottom-right" richColors/>
-        <RootProviders>
+        <ClientProviders>
            {children}
-        </RootProviders>
+        </ClientProviders>
         
       </body>
     </html>

@@ -120,7 +120,7 @@ export default function Home() {
       focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2
     "
             >
-              Connect Wallet
+              Login with Wallet
             </Button>
           </motion.div>
           <div className="text-center space-y-2 font-normal font-chakra leading-7 mt-4">
