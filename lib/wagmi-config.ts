@@ -1,8 +1,9 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { bsc } from 'viem/chains';
 import { bscTestnet } from './chain';
+import { createStorage, cookieStorage } from "wagmi";
 
-console.log('WC PROJECT ID:', process.env.NEXT_PUBLIC_WC_PROJECT_ID);
+
 export const wagmiConfig = getDefaultConfig({
   appName: 'Digidrop',
   projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID!,

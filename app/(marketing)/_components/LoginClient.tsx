@@ -11,6 +11,7 @@ import { useUserStore } from '@/store/useUserProfile';
 import { bscTestnet } from '@/lib/chain';
 import { getNonce, walletLogin } from '@/actions/user';
 import { getProfile } from '@/app/data/profile/profile';
+import { Button } from '@/components/ui/button';
 
 
 
@@ -18,27 +19,17 @@ const LoginClient = () => {
    const { address, isConnected, chainId } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const { disconnect } = useDisconnect();
-  const hasAuthenticated = React.useRef(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const refCode = searchParams.get('ref') || undefined;
-  
-
   const [loading, setLoading] = useState(false);
-  const allowedChainIds =
-    process.env.NODE_ENV === 'development'
-      ? [bscTestnet.id]
-      : [bsc.id];
+  const allowedChainIds =process.env.NODE_ENV === 'development'? [bscTestnet.id] : [bsc.id];
   
   const { setProfile } = useUserStore();
 
-  useEffect(() => {
+  const handleAuthentication = async () => {
      if (!isConnected || !address) return;
      if (!chainId) return;
-     if (loading) return;
-    if (hasAuthenticated.current) return;
-      
-    const handleAuthentication = async () => {
     
     if (!allowedChainIds.includes(chainId)) {
     toast.error('Wrong network. Please switch network.');
@@ -68,14 +59,12 @@ const LoginClient = () => {
     } finally {
       setLoading(false);
     }
-    
-  
-     };
+      
+};
 
-  hasAuthenticated.current = true;
-  handleAuthentication()
-  
-  }, [isConnected, address,chainId])
+
+
+ 
   
   
   return (
@@ -84,10 +73,20 @@ const LoginClient = () => {
             <Card className='w-full max-w-2xl bg-gray-900  text-gray-200'>
                 <CardHeader>
                     <CardTitle className='text-center text-2xl uppercase font-chakra'>WELcome to  DiGiVerse</CardTitle>
-                    <CardContent>
+                    <CardContent className='flex items-center justify-center flex-col'>
                    
                       <div className="text-center">
-                         <ConnectWalletButton />
+                        {isConnected ? (
+                          <Button
+                            onClick={handleAuthentication}
+                            disabled={loading}
+                            className="px-10 py-3 bg-purple-600 text-white rounded-xl"
+                          >
+                            {loading ? 'Signing...' : 'Continue'}
+                          </Button>
+                        ) : (
+                          <ConnectWalletButton />
+                        )}
                           {/* <WalletLoginButton /> */}
                         <p className="mt-4 text-gray-500 text-sm">
                           Connect your wallet for secure login
