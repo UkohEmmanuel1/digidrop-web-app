@@ -1,8 +1,14 @@
 'use client';
 
+import { bscTestnet } from '@/lib/chain';
+import { bsc } from 'viem/chains';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export function ConnectWalletButton() {
+  const allowedChainIds =
+  process.env.NODE_ENV === 'development'
+    ? [bscTestnet.id]
+    : [bsc.id];
   return (
     <ConnectButton.Custom>
       {({
@@ -34,16 +40,16 @@ export function ConnectWalletButton() {
           );
         }
 
-        if (chain?.unsupported) {
-          return (
-            <button
-              onClick={openChainModal}
-              className="bg-red-600 text-white px-6 py-3 rounded-xl"
-            >
-              Wrong Network
-            </button>
-          );
-        }
+        if (chain && !allowedChainIds.includes(chain.id)) {
+            return (
+              <button
+                onClick={openChainModal}
+                className="bg-red-600 text-white px-6 py-3 rounded-xl"
+              >
+                Switch Network
+              </button>
+            );
+          }
 
         return (
           <button
