@@ -5,7 +5,7 @@ import { bsc } from 'viem/chains';
 import dynamic from "next/dynamic";
 import { toast } from 'sonner';
 import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
-import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { useAccount, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/store/useUserProfile';
 import { bscTestnet } from '@/lib/chain';
@@ -19,6 +19,7 @@ const LoginClient = () => {
    const { address, isConnected, chainId } = useAccount();
   const { signMessageAsync } = useSignMessage();
   const { disconnect } = useDisconnect();
+  const { switchChain, isPending: isSwitching } = useSwitchChain();
   const router = useRouter();
   const searchParams = useSearchParams();
   const refCode = searchParams.get('ref') || undefined;
@@ -29,11 +30,18 @@ const LoginClient = () => {
 
   const handleAuthentication = async () => {
      if (!isConnected || !address) return;
-     if (!chainId) return;
+     const targetChainId =process.env.NODE_ENV === 'development'
+       ? bscTestnet.id
+       : bsc.id
     
     if (!allowedChainIds.includes(chainId)) {
-    toast.error('Wrong network. Please switch network.');
-    return;
+      try {
+        await switchChain({ chainId: targetChainId });
+        // Proceed after switch (you can listen to chain change if needed)
+      } catch (err) {
+        toast.error('Failed to switch network. Please switch manually in MetaMask.');
+        return;
+      }
     }
 
     setLoading(true);
@@ -79,10 +87,10 @@ const LoginClient = () => {
                         {isConnected ? (
                           <Button
                             onClick={handleAuthentication}
-                            disabled={loading}
+                            disabled={loading || isSwitching}
                             className="px-10 py-3 bg-purple-600 text-white rounded-xl"
                           >
-                            {loading ? 'Signing...' : 'Continue'}
+                            {isSwitching ? 'Switching network...' : loading ? 'Signing...' : 'Continue'}
                           </Button>
                         ) : (
                           <ConnectWalletButton />
