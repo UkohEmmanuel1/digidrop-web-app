@@ -1,11 +1,11 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { bsc } from 'viem/chains';
-import dynamic from "next/dynamic";
+
 import { toast } from 'sonner';
 import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
-import { useAccount, useDisconnect, useSignMessage, useSwitchChain } from 'wagmi';
+import { useAccount, useDisconnect, useSignMessage, useSwitchChain, useChainId } from 'wagmi';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/store/useUserProfile';
 import { bscTestnet } from '@/lib/chain';
@@ -16,42 +16,68 @@ import { Button } from '@/components/ui/button';
 
 
 const LoginClient = () => { 
-   const { address, isConnected, chainId } = useAccount();
+   const { address, isConnected } = useAccount();
+   const chainId = useChainId();
   const { signMessageAsync } = useSignMessage();
   const { disconnect } = useDisconnect();
-  const { switchChain, isPending: isSwitching } = useSwitchChain();
+  const { switchChainAsync, isPending: isSwitching } = useSwitchChain();
   const router = useRouter();
   const searchParams = useSearchParams();
   const refCode = searchParams.get('ref') || undefined;
   const [loading, setLoading] = useState(false);
-  const allowedChainIds =process.env.NODE_ENV === 'development'? [bscTestnet.id] : [bsc.id];
-  
+  const [hasSwitched, setHasSwitched] = useState(false);
+  const allowedChainIds = process.env.NODE_ENV === 'development' ? [bscTestnet.id] : [bsc.id];
+  const targetChainId = allowedChainIds[0];
   const { setProfile } = useUserStore();
 
-  const handleAuthentication = async () => {
-     if (!isConnected || !address) return;
-     const targetChainId =process.env.NODE_ENV === 'development'
-       ? bscTestnet.id
-       : bsc.id
-    
-    if (chainId && !allowedChainIds.includes(chainId)) {
+
+  useEffect(() => {
+    if (isConnected && chainId && allowedChainIds.includes(chainId) && hasSwitched && !loading && !isSwitching) {
+      // Small delay to ensure stable chainId
+      const timer = setTimeout(() => {
+        handleAuthentication();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+}, [chainId, isConnected, hasSwitched, loading, isSwitching]);
+  
+const handleAuthentication = useCallback(async () => {
+    if (!isConnected || !address) {
+      toast.error('Please connect wallet first');
+      return;
+    }
+
+    if (!chainId) {
+      toast.error('Unable to detect network');
+      return;
+    }
+
+    // ✅ CRITICAL: Skip switchChain if already on correct chain
+    if (!allowedChainIds.includes(chainId)) {
       try {
-        await switchChain({ chainId: targetChainId });
-        // Proceed after switch (you can listen to chain change if needed)
-      } catch (err) {
-        toast.error('Failed to switch network. Please switch manually in MetaMask.');
+        setHasSwitched(true);
+        await switchChainAsync({ chainId: targetChainId });
+        setHasSwitched(false);
+        // Don't proceed here - useEffect will handle after chainId updates
+        return;
+      } catch (err: any) {
+        console.error('Switch chain error:', err);
+        setHasSwitched(false);
+        if (err.code === 4902) { // Chain not added
+          toast.error('BSC network not found. Please add BSC Testnet/Mainnet manually.');
+        } else {
+          toast.error('Please switch to BSC manually in your wallet.');
+        }
         return;
       }
     }
 
-    if (!chainId) return;
+    // ✅ Proceed with login (correct chain confirmed)
     setLoading(true);
-    
     try {
       const { nonce, message } = await getNonce();
       const signature = await signMessageAsync({ message });
 
-      // 3️⃣ Backend login / create user
       if (refCode) {
         await walletLogin(address, signature, nonce, refCode);
       } else {
@@ -62,18 +88,20 @@ const LoginClient = () => {
       setProfile(profile);
       router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
       toast.success('Logged in successfully');
-    } catch (err) {
-      toast.error('Wallet login failed');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      toast.error(err.message || 'Wallet login failed');
       disconnect(); 
     } finally {
       setLoading(false);
+      setHasSwitched(false);
     }
-      
-};
+  }, [isConnected, address, chainId, allowedChainIds, targetChainId, refCode, switchChainAsync, signMessageAsync, disconnect, setProfile, router]);
+console.log("chainId:", chainId)
 
 
-
- 
+  const isCorrectChain = chainId && allowedChainIds.includes(chainId);
+  const buttonDisabled = loading || (!isCorrectChain && isSwitching);
   
   
   return (
@@ -86,13 +114,23 @@ const LoginClient = () => {
                    
                       <div className="text-center">
                         {isConnected ? (
+                          <>
+                          <p className="text-sm text-gray-300">{address}</p>
                           <Button
                             onClick={handleAuthentication}
-                            disabled={loading || isSwitching}
+                            disabled={buttonDisabled}
                             className="px-10 py-3 bg-purple-600 text-white rounded-xl"
-                          >
-                            {isSwitching ? 'Switching network...' : loading ? 'Signing...' : 'Continue'}
-                          </Button>
+                            >
+                              {isSwitching ? 'Switching network...' : 
+                              loading ? 'Signing...' : 
+                              !isCorrectChain ? 'Wrong network' : 'Continue'}
+                            </Button>
+                                {!isCorrectChain && (
+                                  <p className="mt-2 text-orange-400 text-xs">
+                                    On {chainId ? `Chain ${chainId}` : 'Unknown'} (Need {targetChainId})
+                                  </p>
+                                )}
+                              </>
                         ) : (
                           <ConnectWalletButton />
                         )}
