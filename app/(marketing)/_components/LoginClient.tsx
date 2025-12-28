@@ -34,7 +34,7 @@ const LoginClient = () => {
        ? bscTestnet.id
        : bsc.id
     
-    if (!allowedChainIds.includes(chainId)) {
+    if (chainId && !allowedChainIds.includes(chainId)) {
       try {
         await switchChain({ chainId: targetChainId });
         // Proceed after switch (you can listen to chain change if needed)
@@ -44,6 +44,7 @@ const LoginClient = () => {
       }
     }
 
+    if (!chainId) return;
     setLoading(true);
     
     try {

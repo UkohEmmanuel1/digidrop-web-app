@@ -1,7 +1,7 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { bsc } from 'viem/chains';
 import { bscTestnet } from './chain';
-import { createStorage, cookieStorage } from "wagmi";
+
 
 
 export const wagmiConfig = getDefaultConfig({
