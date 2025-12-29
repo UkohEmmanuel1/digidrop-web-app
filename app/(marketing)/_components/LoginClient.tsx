@@ -16,92 +16,81 @@ import { Button } from '@/components/ui/button';
 
 
 const LoginClient = () => { 
-   const { address, isConnected } = useAccount();
-   const chainId = useChainId();
-  const { signMessageAsync } = useSignMessage();
+  const { address, isConnected } = useAccount();
+  const chainId = useChainId();
   const { disconnect } = useDisconnect();
-  const { switchChainAsync, isPending: isSwitching } = useSwitchChain();
+  const nonceRef = useRef<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const refCode = searchParams.get('ref') || undefined;
   const [loading, setLoading] = useState(false);
-  const [hasSwitched, setHasSwitched] = useState(false);
+  const { setProfile } = useUserStore();
   const allowedChainIds = process.env.NODE_ENV === 'development' ? [bscTestnet.id] : [bsc.id];
   const targetChainId = allowedChainIds[0];
-  const { setProfile } = useUserStore();
 
-
-  useEffect(() => {
-    if (isConnected && chainId && allowedChainIds.includes(chainId) && hasSwitched && !loading && !isSwitching) {
-      // Small delay to ensure stable chainId
-      const timer = setTimeout(() => {
-        handleAuthentication();
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-}, [chainId, isConnected, hasSwitched, loading, isSwitching]);
-  
-const handleAuthentication = useCallback(async () => {
-    if (!isConnected || !address) {
-      toast.error('Please connect wallet first');
-      return;
-    }
-
-    if (!chainId) {
-      toast.error('Unable to detect network');
-      return;
-    }
-
-    // ✅ CRITICAL: Skip switchChain if already on correct chain
-    if (!allowedChainIds.includes(chainId)) {
-      try {
-        setHasSwitched(true);
-        await switchChainAsync({ chainId: targetChainId });
-        setHasSwitched(false);
-        // Don't proceed here - useEffect will handle after chainId updates
-        return;
-      } catch (err: any) {
-        console.error('Switch chain error:', err);
-        setHasSwitched(false);
-        if (err.code === 4902) { // Chain not added
-          toast.error('BSC network not found. Please add BSC Testnet/Mainnet manually.');
-        } else {
-          toast.error('Please switch to BSC manually in your wallet.');
-        }
-        return;
-      }
-    }
-
-    // ✅ Proceed with login (correct chain confirmed)
-    setLoading(true);
+  const { signMessage } = useSignMessage({
+  onSuccess: async (signature) => {
     try {
-      const { nonce, message } = await getNonce();
-      const signature = await signMessageAsync({ message });
+      if (!nonceRef.current || !address) {
+        throw new Error('Missing auth data');
+      }
 
       if (refCode) {
-        await walletLogin(address, signature, nonce, refCode);
+        await walletLogin(address, signature, nonceRef.current, refCode);
       } else {
-        await walletLogin(address, signature, nonce);
+        await walletLogin(address, signature, nonceRef.current);
       }
 
       const profile = await getProfile();
       setProfile(profile);
       router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
       toast.success('Logged in successfully');
-    } catch (err: any) {
-      console.error('Login error:', err);
-      toast.error(err.message || 'Wallet login failed');
-      disconnect(); 
+    } catch (err) {
+      console.error(err);
+      toast.error('Login failed');
+      disconnect()
     } finally {
       setLoading(false);
-      setHasSwitched(false);
     }
-  }, [isConnected, address, chainId, allowedChainIds, targetChainId, refCode, switchChainAsync, signMessageAsync, disconnect, setProfile, router]);
-console.log("chainId:", chainId)
+  },
+  onError: () => {
+    toast.error('Signature rejected');
+    setLoading(false);
+  },
+});
+
+  
+const handleAuthentication = async () => {
+  if (!isConnected || !address) {
+    toast.error('Connect wallet first');
+    return;
+  }
+
+  if (!allowedChainIds.includes(chainId)) {
+    toast.error('Please switch to BSC network');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const { nonce, message } = await getNonce();
+    nonceRef.current = nonce;
+
+    // IMPORTANT: slight delay helps MetaMask mobile
+    setTimeout(() => {
+      signMessage({ message });
+    }, 300);
+
+  } catch (err) {
+    setLoading(false);
+    toast.error('Failed to prepare signature');
+  }
+};
 
 
   const isCorrectChain = chainId && allowedChainIds.includes(chainId);
-  const buttonDisabled = loading || (!isCorrectChain && isSwitching);
+  
   
   
   return (
@@ -118,11 +107,10 @@ console.log("chainId:", chainId)
                           <p className="text-sm text-gray-300">{address}</p>
                           <Button
                             onClick={handleAuthentication}
-                            disabled={buttonDisabled}
+                            disabled={loading}
                             className="px-10 py-3 bg-purple-600 text-white rounded-xl"
                             >
-                              {isSwitching ? 'Switching network...' : 
-                              loading ? 'Signing...' : 
+                              {loading ? 'Signing...' : 
                               !isCorrectChain ? 'Wrong network' : 'Continue'}
                             </Button>
                                 {!isCorrectChain && (
