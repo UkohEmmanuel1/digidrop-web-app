@@ -1,11 +1,11 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { bsc } from 'viem/chains';
 
 import { toast } from 'sonner';
 import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
-import { useAccount, useDisconnect, useSignMessage, useSwitchChain, useChainId } from 'wagmi';
+import { useConnection, useDisconnect, useSignMessage, useChainId } from 'wagmi';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/store/useUserProfile';
 import { bscTestnet } from '@/lib/chain';
@@ -16,9 +16,9 @@ import { Button } from '@/components/ui/button';
 
 
 const LoginClient = () => { 
-  const { address, isConnected } = useAccount();
+  const { address, isConnected} = useConnection()
   const chainId = useChainId();
-  const { disconnect } = useDisconnect();
+  const disconnect = useDisconnect()
   const nonceRef = useRef<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -28,36 +28,39 @@ const LoginClient = () => {
   const allowedChainIds = process.env.NODE_ENV === 'development' ? [bscTestnet.id] : [bsc.id];
   const targetChainId = allowedChainIds[0];
 
-  const { signMessage } = useSignMessage({
-  onSuccess: async (signature) => {
-    try {
-      if (!nonceRef.current || !address) {
-        throw new Error('Missing auth data');
-      }
+  const signMessage = useSignMessage({
+  mutation: {
+    onSuccess: async (signature) => {
+      try {
+        if (!nonceRef.current || !address) {
+          throw new Error('Missing auth data');
+        }
 
-      if (refCode) {
-        await walletLogin(address, signature, nonceRef.current, refCode);
-      } else {
-        await walletLogin(address, signature, nonceRef.current);
-      }
+        if (refCode) {
+          await walletLogin(address, signature, nonceRef.current, refCode);
+        } else {
+          await walletLogin(address, signature, nonceRef.current);
+        }
 
-      const profile = await getProfile();
-      setProfile(profile);
-      router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
-      toast.success('Logged in successfully');
-    } catch (err) {
-      console.error(err);
-      toast.error('Login failed');
-      disconnect()
-    } finally {
+        const profile = await getProfile();
+        setProfile(profile);
+        router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
+        toast.success('Logged in successfully');
+      } catch (err) {
+        console.error(err);
+        toast.error('Login failed');
+        disconnect.mutate()
+      } finally {
+        setLoading(false);
+      }
+    },
+    onError: () => {
+      toast.error('Signature rejected');
       setLoading(false);
-    }
-  },
-  onError: () => {
-    toast.error('Signature rejected');
-    setLoading(false);
+    },
   },
 });
+
 
   
 const handleAuthentication = async () => {
@@ -79,7 +82,7 @@ const handleAuthentication = async () => {
 
     // IMPORTANT: slight delay helps MetaMask mobile
     setTimeout(() => {
-      signMessage({ message });
+      signMessage.mutate({ message });
     }, 300);
 
   } catch (err) {
