@@ -48,13 +48,16 @@ const LoginClient = () => {
         toast.success('Logged in successfully');
       } catch (err) {
         console.error(err);
+        disconnect.mutate()
         toast.error('Login failed');
         disconnect.mutate()
       } finally {
-        setLoading(false);
+          nonceRef.current = null;
+          setLoading(false);
       }
     },
     onError: () => {
+      nonceRef.current = null;
       toast.error('Signature rejected');
       setLoading(false);
     },
@@ -64,6 +67,8 @@ const LoginClient = () => {
 
   
 const handleAuthentication = async () => {
+  if (loading) return;
+  
   if (!isConnected || !address) {
     toast.error('Connect wallet first');
     return;

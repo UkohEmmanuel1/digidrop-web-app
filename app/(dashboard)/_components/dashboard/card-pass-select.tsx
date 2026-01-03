@@ -17,7 +17,6 @@ const MintPass = ({data}:CardPassProp) => {
   const isCurrent = currentPassId === data.id;
   const isLocked = profile?.has_pass && data.point_power <= currentPassPower;
   const router = useRouter()
-  console.log("current pass:", isCurrent)
   const handleClick = () => {
     if (isLocked || isCurrent) return;
     router.push(`/buy-pass/${data.id}`);

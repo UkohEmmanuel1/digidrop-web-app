@@ -9,6 +9,7 @@ import { parseEther, formatEther } from 'viem';
 import { verifyPayment } from '@/actions/app';
 import { useRouter } from 'next/navigation';
 import { PassInfo } from '@/types/response-type';
+import { bscTestnet } from '@/lib/chain';
 
 interface Pass {
   pass_id: number;
@@ -27,15 +28,26 @@ const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string
 export default function MintButton({ pass }: { pass: Pass }) {
   const router =useRouter()
   const [verificationDone, setVerificationDone] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { address, isConnected } = useAccount();
-  const { data: balance } = useBalance({ address });
-  const formattedBalance = balance
-  ? Number(formatEther(balance.value)).toFixed(6)
-  : '0';
+  const { address, chain, isConnected, isConnecting } = useAccount();
+  const { data: balance, isLoading: balanceLoading } = useBalance({
+  address,
+  chainId: bscTestnet.id, 
+  query: {
+    enabled: Boolean(address),
+  },
+});
+
+
+  
+  const formattedBalance =balance && !balanceLoading ? Number(formatEther(balance.value)).toFixed(6) : '...';
+  
+  
   useEffect(() => {
-    setMounted(true);
-  }, []);
+  console.log('Connected address:', address);
+  console.log('Connected chain:', chain);
+  console.log('Balance raw:', balance);
+}, [address, chain, balance]);
+
   const { writeContract, 
         data: hash, 
         isPending: isWriting, 
@@ -49,14 +61,14 @@ export default function MintButton({ pass }: { pass: Pass }) {
         functionName: 'getPass',
         args: [BigInt(pass.pass_id)],
         query: {
-            enabled: mounted && isConnected,
+            enabled: isConnected,
         },
         });
       
   const onChainPass = onChainPassRaw as PassInfo | undefined;
   const requiredBNB = onChainPass ? onChainPass.price_wei : parseEther(pass.bnb_price.toFixed(18));
 
-  const hasEnough = balance && balance.value >= requiredBNB;
+  const hasEnough = balance?.value !== undefined && balance.value >= requiredBNB;
 
   const handleMint = async () => {
     if (!address || !hasEnough) return;
@@ -116,7 +128,7 @@ export default function MintButton({ pass }: { pass: Pass }) {
   }, [writeError, confirmError]);
   
 
-  if (!mounted) {
+  if (isConnecting && balanceLoading) {
     return (
       <div className="space-y-6">
         <div className="text-center">

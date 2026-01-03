@@ -11,5 +11,5 @@ export const wagmiConfig = getDefaultConfig({
     process.env.NODE_ENV === 'development'
       ? [bscTestnet]
       : [bsc],
-  ssr: true,
+  ssr: false,
 });
