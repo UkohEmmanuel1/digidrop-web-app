@@ -30,7 +30,7 @@ const Footer = () => {
               text-center md:text-left
             "
           >
-            <p>© {new Date().getFullYear()}</p>
+            <p>COPYRIGHT © {new Date().getFullYear()} DIGIDROP</p>
 
             <Link href="/term-and-condition" className="hover:text-white transition">
               TERMS AND CONDITIONS
@@ -53,9 +53,6 @@ const Footer = () => {
               WHITEPAPER
             </Link>
 
-            <span className="hidden md:inline">|</span>
-
-            <p>VISIT DIGIDROP</p>
           </div>
 
           {/* Social icons */}
@@ -102,3 +99,8 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+
+

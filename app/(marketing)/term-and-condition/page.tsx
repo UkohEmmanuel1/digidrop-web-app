@@ -13,45 +13,45 @@ const SECTIONS: TermSection[] = [
     id: 'agreements',
     title: '1. Agreements',
     content: [
-      'adipiscing convallis. tempor Lorem tincidunt convallis, dolor tortor...',
-      'turpis eu consectetur tempor eu lacus faucibus lobortis...',
-      'sodales, sed lobortis, Nullam placerat...'
+      'By minting a DigiDrop pass, connecting a wellet, or entering the DigiDrop dashboard, you accept this Voyager`s Accord.',
+      'A DigiDrop pass minted as a soulbound access credtial is required before dashboard access is granted. If these terms do not align with your path, do not proceed beyond the mint gate',
+      'DigiDrop is a socialFi entertainment platform, not a financial system, investment vehicle, or marketplace'
     ],
   },
   {
     id: 'rights-laws',
     title: '2. Rights & Laws',
     content: [
-      'adipiscing convallis. tempor Lorem tincidunt convallis...',
-      'turpis eu consectetur tempor eu lacus faucibus lobortis...',
-      'sodales, sed lobortis, Nullam placerat...'
+      'You confirm that your journey through Digi Drop is lawful within your jurisdiction.',
+      'Nothing within this universe—Passes, Stardust, quests, multipliers, or rankings—represents:',
+      'An investment',
+      'A security',
+      'A financial product',
+      'A promise or expectation of profit',
+      'All mechanics exist for experience, access, and participation only.'
     ],
   },
   {
     id: 'third-party',
     title: '3. 3rd Party Applications',
     content: [
-      'adipiscing convallis. tempor Lorem tincidunt convallis...',
-      'turpis eu consectetur tempor eu lacus faucibus lobortis...',
-      'sodales, sed lobortis, Nullam placerat...'
+      'Digi Drop travels alongside third-party systems such as blockchain networks (including BNB Smart Chain), wallet providers, and infrastructure services.',
+      'We do not command these systems and accept no responsibility for:',
+      'Wallet security or private key management',
+      'Network delays, congestion, or outages',
+      'Gas fees or failed transactions',
+      'Engage with third-party tools at your own discretion.'
     ],
   },
   {
     id: 'rights-grant',
     title: '4. Rights You Grant to Us Laws',
     content: [
-      'adipiscing convallis. tempor Lorem tincidunt convallis...',
-      'turpis eu consectetur tempor eu lacus faucibus lobortis...',
-      'sodales, sed lobortis, Nullam placerat...'
-    ],
-  },
-  {
-    id: 'privacy',
-    title: '5. Privacy Policy',
-    content: [
-      'adipiscing convallis. tempor Lorem tincidunt convallis...',
-      'turpis eu consectetur tempor eu lacus faucibus lobortis...',
-      'sodales, sed lobortis, Nullam placerat...'
+      'By entering the constellation, you grant Digi Drop a limited, non-exclusive right to:',
+      'Verify Pass ownership to enable access',
+      'Record quest activity for continuity and fairness',
+      'Display anonymized participation metrics within community features',
+      'Your wallet, assets, and identity remain entirely yours.'
     ],
   },
 ];

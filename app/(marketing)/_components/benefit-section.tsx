@@ -27,22 +27,28 @@ const BCard = ({
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 200, damping: 14 }}
       className="
-        flex h-full w-full max-w-[280px] flex-col items-center
+        flex flex-col items-center
+        h-full w-full 
+        /* Mobile: Allow full width up to a sensible max, Desktop: Let grid control width */
+        max-w-sm lg:max-w-none
         rounded-2xl
         border border-white/15
+        bg-[#181818]/95
+        /* Mobile First Padding: smaller on phone (p-6), larger on desktop (p-10) */
+        p-6 sm:p-8 lg:p-10 
+        text-white
+        transition-all duration-300
         hover:border-gray-400
         hover:shadow-[0_0_25px_rgba(99,102,241,0.35)]
-        bg-[#181818]/95
-        p-10 text-white
-        transition-all duration-300
       "
     >
-      <div className="mb-8 flex justify-center">
+      {/* Icon Container: Adjust margin for mobile/desktop */}
+      <div className="mb-6 sm:mb-8 flex justify-center">
         {icon}
       </div>
 
       <div className="flex flex-1 flex-col items-center text-center">
-        <h2 className="mb-4 font-chakra text-lg font-bold uppercase leading-snug sm:text-xl">
+        <h2 className="mb-3 sm:mb-4 font-chakra text-lg font-bold uppercase leading-snug sm:text-xl">
           {heading}
         </h2>
 
@@ -64,11 +70,11 @@ const BenefitSection: React.FC = () => {
           alt="Cosmic Curiosity"
           width={100}
           height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]" // Responsive image sizing
         />
       ),
       heading: "Cosmic Curiosity",
-      text:
-        "Mint a one of a kind Passport to unlock an ever-expanding universe of interactive quests and collaborative discoveries.",
+      text: "Mint a one of a kind Passport to unlock an ever-expanding universe of interactive quests and collaborative discoveries.",
     },
     {
       icon: (
@@ -77,11 +83,11 @@ const BenefitSection: React.FC = () => {
           alt="Gather Stardust"
           width={100}
           height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]"
         />
       ),
       heading: "Gather Stardust",
-      text:
-        "Engage in inspiring activities to collect Stardust. It is not currency, it is glory. Illuminate your path on the community leaderboard.",
+      text: "Engage in inspiring activities to collect Stardust. It is not currency, it is glory. Illuminate your path on the community leaderboard.",
     },
     {
       icon: (
@@ -90,11 +96,11 @@ const BenefitSection: React.FC = () => {
           alt="ETernal Bonds"
           width={100}
           height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]"
         />
       ),
       heading: "Eternal Bonds",
-      text:
-        "Invite fellow travelers to expand the constellation, creating lasting connections and collective adventures across the digital cosmos.",
+      text: "Invite fellow travelers to expand the constellation, creating lasting connections and collective adventures across the digital cosmos.",
     },
     {
       icon: (
@@ -103,28 +109,32 @@ const BenefitSection: React.FC = () => {
           alt="Loyalty Honors"
           width={100}
           height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]"
         />
       ),
       heading: "Loyalty Honors",
-      text:
-        "Dedicated explorers receive exquisite digital badges and role upgrades, honoring your enduring role in our shared galactic story.",
+      text: "Dedicated explorers receive exquisite digital badges and role upgrades, honoring your enduring role in our shared galactic story.",
     },
   ]
 
   return (
-    <section className="w-full py-28">
-      {/* Container */}
-      <div className="mx-auto w-fit px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
+    // Section Padding: py-12 (mobile) -> py-28 (desktop)
+    <section className="w-full py-12 md:py-20 lg:py-28">
+      {/* Container: standardizes max-width and horizontal padding */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        
         {/* Heading */}
-        <motion.h1
+        <motion.div 
+          className="flex justify-center"
           {...fadeUp(0.1)}
-          className="mb-20 font-chakra text-2xl font-bold uppercase text-white sm:text-3xl md:text-4xl"
         >
-          Why Venture Into the Deep?
-        </motion.h1>
+          <h1 className="mb-10 sm:mb-16 md:mb-20 font-chakra text-center text-2xl font-bold uppercase text-white sm:text-3xl md:text-4xl">
+            Why Venture Into the Deep?
+          </h1>
+        </motion.div>
 
         {/* Cards Grid */}
-        <div className="mx-auto grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4 place-items-center">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 place-items-center items-stretch">
           {cards.map((card, index) => (
             <BCard
               key={index}

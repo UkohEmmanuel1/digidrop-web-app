@@ -50,35 +50,7 @@ const ServiceSection = () => {
 
   return (
     <section className="w-full bg-[#1C1C1C]/90 bg-[url('/assets/pattern-bg.png')] bg-cover bg-center bg-blend-multiply">
-      {/* ===== HERO / INTRO ===== */}
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36 py-28">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-20">
-          {/* Left */}
-          <motion.div
-            {...fadeUp(0.1)}
-            className="space-y-6 text-left text-white"
-          >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-chakra uppercase leading-snug">
-              Complete multiple quests <br />
-              and collect as many <span className="text-purple-600">Stardust</span>  <br />
-              as you can.
-            </h1>
-
-          </motion.div>
-
-          {/* Right */}
-
-            <Image
-              src="/assets_icon/Landing.jpg"
-              alt="brand"
-              width={360}
-              height={360}
-              className="relative z-10 w-[260px] md:w-[320px] lg:w-[360px]"
-            />
-          
-        </div>
-      </div>
-
+       
       {/* ===== HOW TO PLAY ===== */}
       <div className="mx-auto w-fit px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36 py-28">
         <motion.h2
