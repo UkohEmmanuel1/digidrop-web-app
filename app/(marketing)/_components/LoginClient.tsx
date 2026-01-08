@@ -25,7 +25,7 @@ const LoginClient = () => {
   const refCode = searchParams.get('ref') || undefined;
   const [loading, setLoading] = useState(false);
   const { setProfile } = useUserStore();
-  const allowedChainIds = process.env.NODE_ENV === 'development' ? [bscTestnet.id] : [bsc.id];
+  const allowedChainIds =  [bscTestnet.id];
   const targetChainId = allowedChainIds[0];
 
   const signMessage = useSignMessage({
@@ -41,11 +41,9 @@ const LoginClient = () => {
         } else {
           await walletLogin(address, signature, nonceRef.current);
         }
-
-        const profile = await getProfile();
-        setProfile(profile);
-        router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
+         
         toast.success('Logged in successfully');
+        router.replace('/post-login');
       } catch (err) {
         console.error(err);
         disconnect.mutate()
@@ -88,7 +86,7 @@ const handleAuthentication = async () => {
     // IMPORTANT: slight delay helps MetaMask mobile
     setTimeout(() => {
       signMessage.mutate({ message });
-    }, 300);
+    }, 100);
 
   } catch (err) {
     setLoading(false);
