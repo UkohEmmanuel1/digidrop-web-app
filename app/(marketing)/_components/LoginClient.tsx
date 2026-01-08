@@ -1,83 +1,104 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { bsc } from 'viem/chains';
-import dynamic from "next/dynamic";
+
 import { toast } from 'sonner';
 import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
-import { useAccount, useDisconnect, useSignMessage } from 'wagmi';
+import { useConnection, useDisconnect, useSignMessage, useChainId } from 'wagmi';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/store/useUserProfile';
 import { bscTestnet } from '@/lib/chain';
 import { getNonce, walletLogin } from '@/actions/user';
 import { getProfile } from '@/app/data/profile/profile';
+import { Button } from '@/components/ui/button';
 
 
 
 const LoginClient = () => { 
-   const { address, isConnected, chainId } = useAccount();
-  const { signMessageAsync } = useSignMessage();
-  const { disconnect } = useDisconnect();
-
+  const { address, isConnected} = useConnection()
+  const chainId = useChainId();
+  const disconnect = useDisconnect()
+  const nonceRef = useRef<string | null>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const refCode = searchParams.get('ref') || undefined;
-  
-
   const [loading, setLoading] = useState(false);
-  const allowedChainIds =
-    process.env.NODE_ENV === 'development'
-      ? [bscTestnet.id]
-      : [bsc.id];
-  
   const { setProfile } = useUserStore();
+  const allowedChainIds = process.env.NODE_ENV === 'development' ? [bscTestnet.id] : [bsc.id];
+  const targetChainId = allowedChainIds[0];
 
-  useEffect(() => {
-     if (!isConnected || !address) return;
-    const handleAuthentication = async () => {
-    
-    if (chainId && !allowedChainIds.includes(chainId)) {
-      toast.error('Wrong network. Please switch network.');
-      return;
-    }
+  const signMessage = useSignMessage({
+  mutation: {
+    onSuccess: async (signature) => {
+      try {
+        if (!nonceRef.current || !address) {
+          throw new Error('Missing auth data');
+        }
 
-    setLoading(true);
-    
-    try {
-      // 1️⃣ Get nonce & message
-      const { nonce, message } = await getNonce();
+        if (refCode) {
+          await walletLogin(address, signature, nonceRef.current, refCode);
+        } else {
+          await walletLogin(address, signature, nonceRef.current);
+        }
 
-      // 2️⃣ Sign message
-      const signature = await signMessageAsync({ message });
-
-      // 3️⃣ Backend login / create user
-      if (refCode) {
-        await walletLogin(address, signature, nonce, refCode);
-      } else {
-        await walletLogin(address, signature, nonce);
+        const profile = await getProfile();
+        setProfile(profile);
+        router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
+        toast.success('Logged in successfully');
+      } catch (err) {
+        console.error(err);
+        disconnect.mutate()
+        toast.error('Login failed');
+        disconnect.mutate()
+      } finally {
+          nonceRef.current = null;
+          setLoading(false);
       }
-
-      // 4️⃣ Fetch profile
-      const profile = await getProfile();
-      setProfile(profile);
-
-      // 5️⃣ Redirect
-      router.replace(profile.has_pass ? '/dashboard' : '/buy-pass');
-
-      toast.success('Logged in successfully');
-    } catch (err) {
-      toast.error('Wallet login failed');
-      disconnect(); 
-    } finally {
+    },
+    onError: () => {
+      nonceRef.current = null;
+      toast.error('Signature rejected');
       setLoading(false);
-    }
-    
-  
-     };
+    },
+  },
+});
 
-  handleAuthentication()
+
   
-  }, [isConnected, address])
+const handleAuthentication = async () => {
+  if (loading) return;
+  
+  if (!isConnected || !address) {
+    toast.error('Connect wallet first');
+    return;
+  }
+
+  if (!allowedChainIds.includes(chainId)) {
+    toast.error('Please switch to BSC network');
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const { nonce, message } = await getNonce();
+    nonceRef.current = nonce;
+
+    // IMPORTANT: slight delay helps MetaMask mobile
+    setTimeout(() => {
+      signMessage.mutate({ message });
+    }, 300);
+
+  } catch (err) {
+    setLoading(false);
+    toast.error('Failed to prepare signature');
+  }
+};
+
+
+  const isCorrectChain = chainId && allowedChainIds.includes(chainId);
+  
   
   
   return (
@@ -86,10 +107,29 @@ const LoginClient = () => {
             <Card className='w-full max-w-2xl bg-gray-900  text-gray-200'>
                 <CardHeader>
                     <CardTitle className='text-center text-2xl uppercase font-chakra'>WELcome to  DiGiVerse</CardTitle>
-                    <CardContent>
+                    <CardContent className='flex items-center justify-center flex-col'>
                    
                       <div className="text-center">
-                         <ConnectWalletButton />
+                        {isConnected ? (
+                          <>
+                          <p className="text-sm text-gray-300">{address}</p>
+                          <Button
+                            onClick={handleAuthentication}
+                            disabled={loading}
+                            className="px-10 py-3 bg-purple-600 text-white rounded-xl"
+                            >
+                              {loading ? 'Signing...' : 
+                              !isCorrectChain ? 'Wrong network' : 'Continue'}
+                            </Button>
+                                {!isCorrectChain && (
+                                  <p className="mt-2 text-orange-400 text-xs">
+                                    On {chainId ? `Chain ${chainId}` : 'Unknown'} (Need {targetChainId})
+                                  </p>
+                                )}
+                              </>
+                        ) : (
+                          <ConnectWalletButton />
+                        )}
                           {/* <WalletLoginButton /> */}
                         <p className="mt-4 text-gray-500 text-sm">
                           Connect your wallet for secure login

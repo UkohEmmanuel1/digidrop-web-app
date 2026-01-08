@@ -1,7 +1,7 @@
 // components/UpgradeButton.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { useAccount, useBalance, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
 import { parseEther, formatEther } from 'viem';
@@ -27,7 +27,10 @@ export default function UpgradeButton({ pass }: { pass: Pass }) {
   const { address, isConnected } = useAccount();
   const { data: balance } = useBalance({ address });
   const [mounted, setMounted] = useState(false);
-
+  const formattedBalance = useMemo(() => {
+    if (!balance) return '0';
+    return Number(formatEther(balance.value)).toFixed(6);
+  }, [balance]);
   const { writeContract, data: hash, isPending: isWriting } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   useEffect(() => {
@@ -136,7 +139,7 @@ const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
           <p className="text-red-700 font-bold text-xl">Insufficient BNB</p>
           <p className="text-sm mt-2">
             Required: {parseFloat(formatEther(deltaWei)).toFixed(6)} BNB<br />
-            Balance: {balance ? parseFloat(balance.formatted).toFixed(6) : '0'} BNB
+            Balance: {formattedBalance} BNB
           </p>
         </div>
       ) : (

@@ -1,3 +1,4 @@
+import React from "react"
 import type { Metadata } from "next";
 import {  Chakra_Petch } from "next/font/google";
 import { Toaster } from "sonner";

@@ -9,6 +9,7 @@ import { parseEther, formatEther } from 'viem';
 import { verifyPayment } from '@/actions/app';
 import { useRouter } from 'next/navigation';
 import { PassInfo } from '@/types/response-type';
+import { bscTestnet } from '@/lib/chain';
 
 interface Pass {
   pass_id: number;
@@ -25,14 +26,28 @@ const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as `0x${string
 
 
 export default function MintButton({ pass }: { pass: Pass }) {
-    const router =useRouter()
+  const router =useRouter()
   const [verificationDone, setVerificationDone] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { address, isConnected } = useAccount();
-  const { data: balance } = useBalance({ address });
+  const { address, chain, isConnected, isConnecting } = useAccount();
+  const { data: balance, isLoading: balanceLoading } = useBalance({
+  address,
+  chainId: bscTestnet.id, 
+  query: {
+    enabled: Boolean(address),
+  },
+});
+
+
+  
+  const formattedBalance =balance && !balanceLoading ? Number(formatEther(balance.value)).toFixed(6) : '...';
+  
+  
   useEffect(() => {
-    setMounted(true);
-  }, []);
+  console.log('Connected address:', address);
+  console.log('Connected chain:', chain);
+  console.log('Balance raw:', balance);
+}, [address, chain, balance]);
+
   const { writeContract, 
         data: hash, 
         isPending: isWriting, 
@@ -46,14 +61,14 @@ export default function MintButton({ pass }: { pass: Pass }) {
         functionName: 'getPass',
         args: [BigInt(pass.pass_id)],
         query: {
-            enabled: mounted && isConnected,
+            enabled: isConnected,
         },
         });
-        console.log("on chain pass:", onChainPassRaw)
-    const onChainPass = onChainPassRaw as PassInfo | undefined;
+      
+  const onChainPass = onChainPassRaw as PassInfo | undefined;
   const requiredBNB = onChainPass ? onChainPass.price_wei : parseEther(pass.bnb_price.toFixed(18));
 
-  const hasEnough = balance && balance.value >= requiredBNB;
+  const hasEnough = balance?.value !== undefined && balance.value >= requiredBNB;
 
   const handleMint = async () => {
     if (!address || !hasEnough) return;
@@ -87,7 +102,7 @@ export default function MintButton({ pass }: { pass: Pass }) {
         });
     }
  }, [isConfirmed, hash, pass.pass_id, verificationDone]);
- console.log("txhash:", hash)
+ 
 
  // === ERROR HANDLING ===
 
@@ -113,7 +128,7 @@ export default function MintButton({ pass }: { pass: Pass }) {
   }, [writeError, confirmError]);
   
 
-  if (!mounted) {
+  if (isConnecting && balanceLoading) {
     return (
       <div className="space-y-6">
         <div className="text-center">
@@ -134,17 +149,19 @@ export default function MintButton({ pass }: { pass: Pass }) {
         <p className="text-lg">Price: <strong>{onChainPass ? formatEther(onChainPass.price_wei)  : pass.bnb_price.toFixed(6)} BNB</strong></p>
         <p className="text-sm text-gray-600">≈ ${pass.usd_price}</p>
         <p className="text-sm mt-2">
-          Your balance: {balance ? parseFloat(balance.formatted).toFixed(6) : '0'} BNB
+            Balance: {formattedBalance} BNB
         </p>
       </div>
 
-      {!isConnected ? (
-        <p className="text-red-500 text-center">Connect wallet to mint</p>
-      ) :!hasEnough ? (
-        <div className="bg-red-50 border border-red-300 rounded-lg p-6 text-center">
+      {!address ? (
+        <p className="text-red-500 text-center">
+          Connect wallet to mint
+        </p>) : !hasEnough ? (
+        <div className="border border-red-300 rounded-lg p-6 text-center">
           <p className="text-red-700 font-bold text-xl">Insufficient BNB Balance</p>
           <p className="text-sm mt-2">
             Required: {onChainPass ? formatEther(onChainPass.price_wei) : pass.bnb_price.toFixed(6)} BNB
+            Balance: {formattedBalance} BNB
           </p>
         </div>
       ) : (
