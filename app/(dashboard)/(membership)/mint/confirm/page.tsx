@@ -26,7 +26,7 @@ export default function MintConfirmPage() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <FaSpinner size={30} color="white" />
-          <p className="mt-4 text-lg font-semibold">
+          <p className="mt-4 text-lg font-semibold text-white">
               Waiting for blockchain confirmation…
           </p>
           <p className="text-sm text-gray-500">

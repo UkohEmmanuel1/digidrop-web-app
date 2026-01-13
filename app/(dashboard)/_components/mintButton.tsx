@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import PassNFT_ABI from '@/contract/abi.json';
 import { toast } from 'sonner';
-import { useAccount, useBalance, usePublicClient, useWriteContract, useDisconnect, useSwitchChain, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useBalance, useWriteContract, usePublicClient, useDisconnect, useSwitchChain, useReadContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseEther, formatEther } from 'viem';
 import { useRouter } from 'next/navigation';
 import { PassInfo } from '@/types/response-type';
@@ -29,6 +29,8 @@ const GAS_BUFFER = parseEther('0.002');
 
 export default function MintButton({ pass }: { pass: Pass }) {
   const router =useRouter()
+  const [localMinting, setLocalMinting] = useState(false);
+  const publicClient = usePublicClient();
   const { address, chain, isConnected, isConnecting } = useAccount();
   const { switchChainAsync } = useSwitchChain();
   const { data: balance, isLoading: balanceLoading } = useBalance({
@@ -38,6 +40,8 @@ export default function MintButton({ pass }: { pass: Pass }) {
     enabled: Boolean(address),
   },
 });
+
+  
  
   const formattedBalance =balance && !balanceLoading ? Number(formatEther(balance.value)).toFixed(6) : '...';
   const {
@@ -47,7 +51,13 @@ export default function MintButton({ pass }: { pass: Pass }) {
     error: writeError,
   } = useWriteContract();
 
-  
+    const {
+    data: txReceipt,
+    isLoading: isConfirming,
+    isError: isReceiptError,
+  } = useWaitForTransactionReceipt({
+    hash,
+  });
 
     const { data: onChainPassRaw } = useReadContract({
         address: CONTRACT_ADDRESS,
@@ -75,38 +85,48 @@ export default function MintButton({ pass }: { pass: Pass }) {
   };
 
   const handleMint = async () => {
-    if (!address || !hasEnough) return;
+  if (!address || !hasEnough) return;
 
-     if (chain?.id !== TARGET_CHAIN_ID) {
-      try {
-        await switchChainAsync({ chainId: TARGET_CHAIN_ID });
-      } catch {
-        toast.error('Please switch to BSC Testnet');
-        return;
-      }
-    }
+  if (chain?.id !== TARGET_CHAIN_ID) {
+    await switchChainAsync({ chainId: TARGET_CHAIN_ID });
+  }
 
-    if (!hasEnough) {
-      toast.error('Insufficient BNB (including gas)');
-      return;
-    }
 
-    try {
-      await writeContractAsync({
-        address: CONTRACT_ADDRESS,
-        abi: PassNFT_ABI,
-        functionName: 'mint',
-        args: [BigInt(pass.pass_id)],
-        value: requiredBNB,
-      });
+  try {
+    setLocalMinting(true);
+    await writeContractAsync({
+      address: CONTRACT_ADDRESS,
+      abi: PassNFT_ABI,
+      functionName: 'mint',
+      args: [BigInt(pass.pass_id)],
+      value: requiredBNB,
+    });
 
-     router.replace("/mint/confirm");
-     toast.success("Transaction submitted. Processing mint…");
-    } catch {
-      toast.error('Transaction cancelled');
-    }
-  };
+    toast.success("Confirm transaction in your wallet");
+  } catch {
+    setLocalMinting(false);
+    toast.error('Transaction cancelled');
+  }
+};
 
+const resetMintState = () => {
+  // This forces UI to unlock
+  setLocalMinting(false);
+};
+
+useEffect(() => {
+  if (!txReceipt) return;
+
+  if (txReceipt.status === 'success') {
+    toast.success('Mint successful 🎉');
+    router.replace('/mint/confirm');
+  }
+
+  if (txReceipt.status === 'reverted') {
+    toast.error('You already have a pass');
+    resetMintState();
+  }
+}, [txReceipt, router]);
    
 
   if (isConnecting && balanceLoading) {
@@ -155,12 +175,24 @@ export default function MintButton({ pass }: { pass: Pass }) {
       ) : (
         <button
           onClick={handleMint}
-          disabled={isWriting}
+          disabled={localMinting || isWriting || isConfirming}
           className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-xl text-lg disabled:opacity-50"
         >
-          {isWriting ? 'Minting...' : 'Mint Pass Now'}
+           {isWriting
+              ? 'Waiting for wallet…'
+              : isConfirming
+              ? 'Minting on-chain…'
+              : 'Mint Pass Now'}
         </button>
       )}
+
+      <Button
+          onClick={handleDisconnect}
+          disabled={isConnecting}
+          className="px-6 py-3"
+          >
+             for test Disconnecting Wallet
+          </Button>
     </div>
   );
 }

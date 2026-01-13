@@ -48,7 +48,6 @@ const LoginClient = () => {
         console.error(err);
         disconnect.mutate()
         toast.error('Login failed');
-        disconnect.mutate()
       } finally {
           nonceRef.current = null;
           setLoading(false);
@@ -57,6 +56,7 @@ const LoginClient = () => {
     onError: () => {
       nonceRef.current = null;
       toast.error('Signature rejected');
+      disconnect.mutate()
       setLoading(false);
     },
   },

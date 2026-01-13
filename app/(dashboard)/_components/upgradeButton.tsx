@@ -37,7 +37,6 @@ export default function UpgradeButton({ pass }: { pass: Pass }) {
       setMounted(true);
     }, []);
 
-  const [verified, setVerified] = useState(false);
   const [deltaWei, setDeltaWei] = useState<bigint | null>(null);
   const [loadingPrice, setLoadingPrice] = useState(true);
 
@@ -104,14 +103,16 @@ const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
   // Verification after success
   useEffect(() => {
     if (isConfirmed && hash) {
-      verifyPayment({txHash:hash, newPassId: pass.pass_id, isUpgrade: true})
-        .then(() => {
-          toast.success(`${pass.name} upgraded!`);
-          router.replace('/dashboard');
-        })
-        .catch(() => toast.error('Verification failed'));
+      // verifyPayment({txHash:hash, newPassId: pass.pass_id, isUpgrade: true})
+      //   .then(() => {
+      //     toast.success(`${pass.name} upgraded!`);
+      //     router.replace('/dashboard');
+      //   })
+      //   .catch(() => toast.error('Verification failed'));
+      toast.success('Pass upgraded successful 🎉');
+      router.replace('/dashboard');
     }
-  }, [isConfirmed, hash, pass.pass_id]);
+  }, [isConfirmed, hash]);
 
 
 
