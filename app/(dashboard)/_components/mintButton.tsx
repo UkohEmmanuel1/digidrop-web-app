@@ -30,7 +30,6 @@ const GAS_BUFFER = parseEther('0.002');
 export default function MintButton({ pass }: { pass: Pass }) {
   const router =useRouter()
   const [localMinting, setLocalMinting] = useState(false);
-  const publicClient = usePublicClient();
   const { address, chain, isConnected, isConnecting } = useAccount();
   const { switchChainAsync } = useSwitchChain();
   const { data: balance, isLoading: balanceLoading } = useBalance({

@@ -1,8 +1,6 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { bsc } from 'viem/chains';
-
 import { toast } from 'sonner';
 import { ConnectWalletButton } from '@/components/common/WalletConnectButton';
 import { useConnection, useDisconnect, useSignMessage, useChainId } from 'wagmi';
@@ -10,7 +8,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useUserStore } from '@/store/useUserProfile';
 import { bscTestnet } from '@/lib/chain';
 import { getNonce, walletLogin } from '@/actions/user';
-import { getProfile } from '@/app/data/profile/profile';
 import { Button } from '@/components/ui/button';
 
 
@@ -24,7 +21,6 @@ const LoginClient = () => {
   const searchParams = useSearchParams();
   const refCode = searchParams.get('ref') || undefined;
   const [loading, setLoading] = useState(false);
-  const { setProfile } = useUserStore();
   const allowedChainIds =  [bscTestnet.id];
   const targetChainId = allowedChainIds[0];
 
@@ -102,22 +98,22 @@ const handleAuthentication = async () => {
   return (
     <div className='h-screen w-full relative bg-[url("/assets/bg.png")] bg-cover bg-center bg-no-repeat'>
         <div className="flex h-full justify-center items-center">
-            <Card className='w-full max-w-2xl bg-gray-900  text-gray-200'>
+            <Card className='w-full max-w-2xl mx-2 bg-gray-900  text-gray-200'>
                 <CardHeader>
-                    <CardTitle className='text-center text-2xl uppercase font-chakra'>WELcome to  DiGiVerse</CardTitle>
+                    <CardTitle className='text-center text-2xl uppercase font-chakra'>Welcome to  DiGiDrop</CardTitle>
                     <CardContent className='flex items-center justify-center flex-col'>
                    
                       <div className="text-center">
                         {isConnected ? (
                           <>
-                          <p className="text-sm text-gray-300">{address}</p>
+                          <p className="text-sm text-gray-300 py-2">{address}</p>
                           <Button
                             onClick={handleAuthentication}
                             disabled={loading}
                             className="px-10 py-3 bg-purple-600 text-white rounded-xl"
                             >
                               {loading ? 'Signing...' : 
-                              !isCorrectChain ? 'Wrong network' : 'Continue'}
+                              !isCorrectChain ? 'Wrong network' : 'Continue to Login'}
                             </Button>
                                 {!isCorrectChain && (
                                   <p className="mt-2 text-orange-400 text-xs">
