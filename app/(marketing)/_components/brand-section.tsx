@@ -1,5 +1,6 @@
 import Image from "next/image"
 import React from "react"
+import { motion } from "framer-motion";
 
 const brands = [
   "/assets/brands/brand-1.png",
@@ -16,15 +17,34 @@ const brands = [
   "/assets/brands/brand-12.png",
 ]
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  },
+};
+
 const BrandSupport = () => {
   return (
     <section className="w-full bg-[#1C1C1C] py-24">
       {/* Container */}
       <div className="mx-auto w-fit px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
+        
         {/* Heading */}
-        <h1 className="text-3xl font-bold uppercase sm:text-4xl md:text-5xl text-white font-chakra">
-          EXPANDING OUR REACH THROUGH STRATEGIC PARTNERSHIPS
-        </h1>
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          className="mb-16 text-center md:text-left"
+        >
+          <h2 className="text-3xl font-bold uppercase sm:text-4xl md:text-5xl text-white">
+            EXPANDING OUR REACH THROUGH STRATEGIC PARTNERSHIPS
+          </h2>
+        </motion.div>
+      
 
         {/* Brands Grid */}
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 place-items-center">

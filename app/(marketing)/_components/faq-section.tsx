@@ -2,7 +2,17 @@
 
 import React, { useState } from "react"
 import { ChevronRight } from "lucide-react"
-import { motion } from "motion/react"
+import { motion } from "framer-motion" // Changed from "motion/react" to "framer-motion" (Standard import)
+
+// 1. ADD THIS DEFINITION HERE
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { duration: 0.6, ease: "easeOut" } 
+  },
+};
 
 const faqs = [
   {
@@ -43,10 +53,19 @@ const FAQ = () => {
     <section id="FAQs" className="w-full py-12 font-chakra">
       {/* Container */}
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
+        
         {/* Heading */}
-        <h2 className="text-3xl font-bold uppercase sm:text-4xl md:text-5xl text-white font-chaker">
-          Frequently Asked Questions
-        </h2>
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp} 
+          className="mb-16 text-center md:text-left"
+        >
+          <h2 className="text-3xl font-bold text-white uppercase sm:text-4xl md:text-5xl">
+            Frequently Asked Questions
+          </h2>
+        </motion.div>
 
         {/* Divider */}
         <div className="mb-4 h-px w-full bg-white/10" />

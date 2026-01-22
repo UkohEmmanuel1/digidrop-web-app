@@ -50,7 +50,7 @@ const Footer = () => {
             "
           >
             <Link href="/manifesto" className="hover:text-white transition">
-              Manifesto
+              MANIFESTO
             </Link>
 
           </div>
