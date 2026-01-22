@@ -13,7 +13,7 @@ import BrandSupport from "./_components/brand-section"
 import FAQ from "./_components/faq-section"
 import LogoMark from "./_components/logo-mark"
 
-// Animation Variants (Extracted for cleaner JSX)
+// Animation Variants
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
@@ -34,31 +34,35 @@ const scaleIn: Variants = {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col font-chakra">
+    <main className="flex min-h-screen flex-col font-chakra overflow-x-hidden">
+      
       {/* ===== HERO SECTION ===== */}
-      <section className="relative w-full overflow-hidden bg-[linear-gradient(179.5deg,rgba(59,31,131,0.3)_0.44%,rgba(0,74,173,0.5)_49.67%,rgba(28,28,28,0.75)_99.57%)] px-4 pb-20 pt-12 sm:px-6 lg:px-8">
+      <section className="relative w-full bg-[linear-gradient(179.5deg,rgba(59,31,131,0.3)_0.44%,rgba(0,74,173,0.5)_49.67%,rgba(28,28,28,0.75)_99.57%)] px-4 pb-16 pt-12 sm:px-6 md:pb-24 lg:px-8">
+        
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center text-center">
           
           {/* Subheading */}
-          <motion.p
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            className="mb-4 text-lg font-semibold text-blue-500 sm:text-xl"
+            className="mb-4 inline-block rounded-full bg-blue-500/10 px-4 py-1.5 backdrop-blur-sm"
           >
-            Season 1
-          </motion.p>
+            <span className="text-sm font-bold uppercase tracking-wider text-blue-400 sm:text-base">
+              Season 1
+            </span>
+          </motion.div>
 
           {/* Main Heading */}
           <motion.h1
-            initial={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-4xl bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text py-2 text-4xl font-bold leading-tight text-transparent transition-opacity hover:opacity-80 sm:text-5xl md:text-6xl md:leading-[1.1]"
+            className="max-w-4xl bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text bg-[200%_auto] py-2 text-4xl font-extrabold leading-[1.15] text-transparent animate-gradient sm:text-5xl md:text-7xl"
           >
-            Discover the Infinite Cosmos of Web3
+            Discover the Infinite <br className="hidden sm:block" /> Cosmos of Web3
           </motion.h1>
 
           {/* Description */}
@@ -67,101 +71,114 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="mt-6 max-w-2xl text-base font-normal leading-relaxed text-gray-200 sm:text-lg"
+            transition={{ delay: 0.2 }}
+            className="mt-6 max-w-2xl text-base font-medium leading-relaxed text-gray-300 sm:text-lg md:text-xl"
           >
             Step into a boundless galaxy where curiosity leads the way. Mint your
             unique Soulbound Passport on the BNB Chain, embark on captivating
             quests, and gather Stardust to illuminate your legacy.
           </motion.p>
 
-          {/* Pass Images Grid (3 Columns on All Devices) */}
-          <div className="mt-12 grid w-full grid-cols-3 items-end justify-items-center gap-2 sm:gap-6 md:mt-16 md:gap-10">
+          {/* Pass Images Grid (Mobile First Layout) */}
+          <div className="mt-12 grid w-full max-w-5xl grid-cols-3 items-end gap-2 sm:gap-6 md:mt-20 md:gap-8">
             
             {/* Left Card (Black) */}
             <motion.div
-              initial={{ opacity: 0, x: -40 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="w-full flex justify-center"
+              className="flex justify-end pb-2 sm:pb-4"
             >
               <Image
                 src="/assets_icon/00.png"
                 alt="Black Passport"
                 width={294}
                 height={260}
-                className="h-auto w-full max-w-[120px] object-contain sm:max-w-[200px] md:max-w-[294px]"
+                className="w-full max-w-[100px] object-contain transition-transform hover:scale-105 sm:max-w-[180px] md:max-w-[260px]"
               />
             </motion.div>
 
-            {/* Middle Card (Golden) - Center Stage */}
+            {/* Middle Card (Golden) - Hero */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={scaleIn}
               transition={{ delay: 0.6 }}
-              className="relative z-10 flex w-full justify-center scale-110 md:scale-100 md:-mt-16 lg:-mt-24"
+              className="relative z-10 flex justify-center -mb-4 md:-mb-12"
             >
-              <Image
-                src="/assets_icon/02.png"
-                alt="Gold Passport"
-                width={460}
-                height={400}
-                priority // Prioritize loading the hero image
-                className="h-auto w-full max-w-[150px] drop-shadow-[0_0_20px_rgba(192,132,252,0.6)] sm:max-w-[280px] md:drop-shadow-[0_0_35px_rgba(192,132,252,0.8)] lg:max-w-[460px]"
-              />
+              <div className="relative w-full max-w-[140px] sm:max-w-[240px] md:max-w-[380px]">
+                {/* Glow Effect behind main card */}
+                <div className="absolute inset-0 -z-10 bg-purple-500/30 blur-2xl" />
+                <Image
+                  src="/assets_icon/02.png"
+                  alt="Gold Passport"
+                  width={460}
+                  height={400}
+                  priority
+                  className="h-auto w-full drop-shadow-2xl transition-transform hover:scale-105"
+                />
+              </div>
             </motion.div>
 
             {/* Right Card (White) */}
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
+              initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.8, duration: 0.8 }}
-              className="w-full flex justify-center"
+              className="flex justify-start pb-2 sm:pb-4"
             >
               <Image
                 src="/assets_icon/01.png"
                 alt="White Passport"
                 width={294}
                 height={260}
-                className="h-auto w-full max-w-[120px] object-contain sm:max-w-[200px] md:max-w-[294px]"
+                className="w-full max-w-[100px] object-contain transition-transform hover:scale-105 sm:max-w-[180px] md:max-w-[260px]"
               />
             </motion.div>
           </div>
 
-          {/* Call to Action */}
+          {/* CTA Section */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUp}
             transition={{ delay: 1 }}
-            className="mt-12 md:mt-16"
+            className="mt-16 flex flex-col items-center gap-6 md:mt-24"
           >
             <Button
               asChild
-              className="h-auto rounded-xl border-2 border-purple-400 bg-gray-900 px-8 py-3 text-sm font-semibold tracking-wide text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all hover:scale-105 hover:bg-gray-800 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] sm:px-10 sm:py-4 sm:text-lg"
+              className="group relative h-auto overflow-hidden rounded-xl border border-purple-500/50 bg-gray-900/80 px-8 py-4 text-base font-bold text-white shadow-[0_0_30px_rgba(168,85,247,0.25)] backdrop-blur-md transition-all hover:scale-105 hover:border-purple-400 hover:shadow-[0_0_50px_rgba(168,85,247,0.4)] sm:text-lg"
             >
-              <Link href="/login">Login with Wallet</Link>
+              <Link href="/login" className="flex items-center gap-2">
+                <span>Login with Wallet</span>
+              </Link>
             </Button>
-          </motion.div>
 
+            <div className="text-center">
+              <p className="text-sm font-medium text-gray-300 sm:text-base">
+                Start your Journey now
+              </p>
+              <p className="mt-1 text-xs text-gray-400 sm:text-sm">
+                Powered by BNB Smart Chain
+              </p>
+            </div>
+          </motion.div>
           
-          <div className="mt-12 space-y-2 text-center text-gray-300">
-            <h2 className="text-lg font-medium sm:text-xl">Start your Journey now</h2>
-            <p className="text-sm sm:text-base opacity-80">Powered by BNB Smart Chain</p>
-          </div>
         </div>
       </section>
 
       {/* ===== OTHER SECTIONS ===== */}
-      <Circular />
-      <ServiceSection />
-      <BrandSupport />
-      <FAQ />
-      <LogoMark />
+      <div className="relative z-10 space-y-0 pb-20 sm:space-y-2 md:pt-0">
+        <Circular />
+        <ServiceSection />
+        <BrandSupport />
+        <FAQ />
+        <LogoMark />
+      </div>
     </main>
-  )}
+  )
+}
