@@ -1,7 +1,7 @@
 // components/UpgradeButton.tsx
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useAccount, useBalance, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi';
 import { parseEther, formatEther } from 'viem';
@@ -27,16 +27,14 @@ export default function UpgradeButton({ pass }: { pass: Pass }) {
   const { address, isConnected } = useAccount();
   const { data: balance } = useBalance({ address });
   const [mounted, setMounted] = useState(false);
-  const formattedBalance = useMemo(() => {
-    if (!balance) return '0';
-    return Number(formatEther(balance.value)).toFixed(6);
-  }, [balance]);
+
   const { writeContract, data: hash, isPending: isWriting } = useWriteContract();
   const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
   useEffect(() => {
       setMounted(true);
     }, []);
 
+  const [verified, setVerified] = useState(false);
   const [deltaWei, setDeltaWei] = useState<bigint | null>(null);
   const [loadingPrice, setLoadingPrice] = useState(true);
 
@@ -103,16 +101,14 @@ const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
   // Verification after success
   useEffect(() => {
     if (isConfirmed && hash) {
-      // verifyPayment({txHash:hash, newPassId: pass.pass_id, isUpgrade: true})
-      //   .then(() => {
-      //     toast.success(`${pass.name} upgraded!`);
-      //     router.replace('/dashboard');
-      //   })
-      //   .catch(() => toast.error('Verification failed'));
-      toast.success('Pass upgraded successful 🎉');
-      router.replace('/dashboard');
+      verifyPayment({txHash:hash, newPassId: pass.pass_id, isUpgrade: true})
+        .then(() => {
+          toast.success(`${pass.name} upgraded!`);
+          router.replace('/dashboard');
+        })
+        .catch(() => toast.error('Verification failed'));
     }
-  }, [isConfirmed, hash]);
+  }, [isConfirmed, hash, pass.pass_id]);
 
 
 
@@ -140,7 +136,7 @@ const currentPassId = userPassTuple ? Number(userPassTuple[0]) : 0;
           <p className="text-red-700 font-bold text-xl">Insufficient BNB</p>
           <p className="text-sm mt-2">
             Required: {parseFloat(formatEther(deltaWei)).toFixed(6)} BNB<br />
-            Balance: {formattedBalance} BNB
+            Balance: {balance ? parseFloat(balance.formatted).toFixed(6) : '0'} BNB
           </p>
         </div>
       ) : (

@@ -10,7 +10,7 @@ export const bscTestnet: Chain = {
   },
   rpcUrls: {
     default: {
-      http: ['https://bsc-testnet.publicnode.com'],
+      http: ['https://data-seed-prebsc-1-s1.binance.org:8545'],
     },
   },
   blockExplorers: {

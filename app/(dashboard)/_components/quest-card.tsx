@@ -12,6 +12,13 @@ import QuestTable from './dashboard/quest-table';
 import { useTasks } from '@/hooks/useTasks';
 import { TaskSkeleton } from './dashboard/taskSkeleton';
 
+// const quest_data = [
+//         { icon: "twitter", title: "twitter@example.com", points: 5, external_link: "https://futurexpay.com"},
+//         { icon: "instagram", title: "insta@example.com", points: 7, external_link: "https://futurexpay.com" },
+//         { icon: "discord",  title: "fb@example.com", points: 10, external_link: "https://futurexpay.com" },
+// ]
+
+
 
 const TaskQuest = () => {
   const { data, isLoading } = useTasks();
@@ -20,13 +27,13 @@ const TaskQuest = () => {
     return <TaskSkeleton />;
   }
   return (
-     <Tabs defaultValue="allQuest" className="w-full mx-auto max-w-4xl mt-10">
+     <Tabs defaultValue="allQuest" className="w-full max-w-3xl mx-auto mt-10">
       <TabsList className=" text-white w-full uppercase font-chakra bg-transparent mb-4">
         <TabsTrigger value="allQuest" className='text-xl uppercase data-[state=active]:bg-transparent data-[state=active]:text-brandColor'>All Mission</TabsTrigger>    
       </TabsList>
 
       <TabsContent value="allQuest">
-        <Card className='mx-auto w-full bg-[#333333] border border-gray-200 text-gray-200 '>
+        <Card className='w-[80%] md:w-[680px] mx-auto h-full bg-[#333333] text-gray-200 border border-gray-200'>
           <CardHeader className='w-full mx-auto'>
             <NoteCard />
           </CardHeader>
