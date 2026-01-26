@@ -4,11 +4,11 @@ import React from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 
-// Animation helper
+// Fade-up animation helper
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 40 },
+  initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, delay, ease: "easeOut" },
+  transition: { duration: 0.8, delay },
   viewport: { once: true },
 })
 
@@ -17,36 +17,44 @@ const BCard = ({
   icon,
   heading,
   text,
-  delay,
 }: {
   icon: React.ReactNode
   heading: string
   text: string
-  delay: number
 }) => {
   return (
     <motion.div
-      // Spread the fadeUp object directly for cleaner code
-      {...fadeUp(delay)}
-      whileHover={{ y: -8 }}
-      className="h-full"
+      whileHover={{ y: -6 }}
+      transition={{ type: "spring", stiffness: 200, damping: 14 }}
+      className="
+        flex flex-col items-center
+        h-full w-full 
+        /* Mobile: Allow full width up to a sensible max, Desktop: Let grid control width */
+        max-w-sm lg:max-w-none
+        rounded-2xl
+        border border-white/15
+        bg-[#181818]/95
+        /* Mobile First Padding: smaller on phone (p-6), larger on desktop (p-10) */
+        p-6 sm:p-8 lg:p-10 
+        text-white
+        transition-all duration-300
+        hover:border-gray-400
+        hover:shadow-[0_0_25px_rgba(99,102,241,0.35)]
+      "
     >
-      <div className="group flex h-full flex-col items-center rounded-2xl border border-white/10 bg-[#1C1C1C] p-8 text-center transition-all duration-300 hover:border-gray-400 hover:shadow-[0_0_25px_rgba(168,85,247,0.35)]">
-        
-        {/* Icon - Consistent Height Container */}
-        <div className="mb-6 flex h-[140px] w-full items-center justify-center">
-          {icon}
-        </div>
+      {/* Icon Container: Adjust margin for mobile/desktop */}
+      <div className="mb-6 sm:mb-8 flex justify-center">
+        {icon}
+      </div>
 
-        {/* Heading and Text */}
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-bold uppercase tracking-wide text-white">
-            {heading}
-          </h3>
-          <p className="text-sm leading-relaxed text-gray-400 transition-colors group-hover:text-gray-200">
-            {text}
-          </p>
-        </div>
+      <div className="flex flex-1 flex-col items-center text-center">
+        <h2 className="mb-3 sm:mb-4 font-chakra text-lg font-bold uppercase leading-snug sm:text-xl">
+          {heading}
+        </h2>
+
+        <p className="text-sm leading-relaxed text-gray-300 sm:text-base">
+          {text}
+        </p>
       </div>
     </motion.div>
   )
@@ -60,9 +68,9 @@ const BenefitSection: React.FC = () => {
         <Image
           src="/assets_icon/22.png"
           alt="Cosmic Curiosity"
-          width={120}
-          height={120}
-          className="h-auto w-auto object-contain drop-shadow-lg"
+          width={100}
+          height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]" // Responsive image sizing
         />
       ),
       heading: "Cosmic Curiosity",
@@ -73,9 +81,9 @@ const BenefitSection: React.FC = () => {
         <Image
           src="/assets_icon/19.png"
           alt="Gather Stardust"
-          width={120}
-          height={120}
-          className="h-auto w-auto object-contain drop-shadow-lg"
+          width={100}
+          height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]"
         />
       ),
       heading: "Gather Stardust",
@@ -85,10 +93,10 @@ const BenefitSection: React.FC = () => {
       icon: (
         <Image
           src="/assets_icon/2.png"
-          alt="Eternal Bonds"
-          width={120}
-          height={120}
-          className="h-auto w-auto object-contain drop-shadow-lg"
+          alt="ETernal Bonds"
+          width={100}
+          height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]"
         />
       ),
       heading: "Eternal Bonds",
@@ -99,9 +107,9 @@ const BenefitSection: React.FC = () => {
         <Image
           src="/assets_icon/3.png"
           alt="Loyalty Honors"
-          width={120}
-          height={120}
-          className="h-auto w-auto object-contain drop-shadow-lg"
+          width={100}
+          height={100}
+          className="w-16 h-16 sm:w-[100px] sm:h-[100px]"
         />
       ),
       heading: "Loyalty Honors",
@@ -110,28 +118,29 @@ const BenefitSection: React.FC = () => {
   ]
 
   return (
-    <section className="w-full pb-20 pt-10 font-chakra text-white">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    // Section Padding: py-12 (mobile) -> py-28 (desktop)
+    <section className="w-full py-12 md:py-20 lg:py-28">
+      {/* Container: standardizes max-width and horizontal padding */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Heading */}
+        {/* Heading */}
         <motion.div 
-          className="mb-16 text-center md:text-left" 
+          className="flex justify-center"
           {...fadeUp(0.1)}
         >
-          <h2 className="text-3xl font-bold uppercase sm:text-4xl md:text-5xl">
+          <h1 className="mb-10 sm:mb-16 md:mb-20 font-chakra text-center text-2xl font-bold uppercase text-white sm:text-3xl md:text-4xl">
             Why Venture Into the Deep?
-          </h2>
+          </h1>
         </motion.div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 place-items-center items-stretch">
           {cards.map((card, index) => (
             <BCard
               key={index}
               icon={card.icon}
               heading={card.heading}
               text={card.text}
-              delay={0.2 + index * 0.15}
             />
           ))}
         </div>
