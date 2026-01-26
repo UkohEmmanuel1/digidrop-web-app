@@ -2,17 +2,7 @@
 
 import React, { useState } from "react"
 import { ChevronRight } from "lucide-react"
-import { motion } from "framer-motion" // Changed from "motion/react" to "framer-motion" (Standard import)
-
-// 1. ADD THIS DEFINITION HERE
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.6, ease: "easeOut" } 
-  },
-};
+import { motion } from "motion/react"
 
 const faqs = [
   {
@@ -50,22 +40,13 @@ const FAQ = () => {
   }
 
   return (
-    <section id="FAQs" className="w-full py-12 font-chakra">
+    <section id="FAQs" className="w-full py-12">
       {/* Container */}
       <div className="mx-auto max-w-6xl px-6 sm:px-10 md:px-20 lg:px-28 xl:px-36">
-        
         {/* Heading */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp} 
-          className="mb-16 text-center md:text-left"
-        >
-          <h2 className="text-3xl font-bold text-white uppercase sm:text-4xl md:text-5xl">
-            Frequently Asked Questions
-          </h2>
-        </motion.div>
+        <h2 className="mb-8 text-center text-3xl font-bold text-white sm:text-4xl">
+          Frequently Asked Questions
+        </h2>
 
         {/* Divider */}
         <div className="mb-4 h-px w-full bg-white/10" />
@@ -82,7 +63,7 @@ const FAQ = () => {
                 onClick={() => toggleAccordion(index)}
                 className="flex w-full items-start justify-between gap-6 px-6 py-6 text-left transition sm:px-8"
               >
-                <span className="text-lg font-medium text-white sm:text-xl font-chakra">
+                <span className="text-lg font-medium text-white sm:text-xl">
                   {faq.question}
                 </span>
 
@@ -106,7 +87,7 @@ const FAQ = () => {
                 transition={{ duration: 0.35, ease: "easeInOut" }}
                 className="overflow-hidden"
               >
-                <p className="px-6 pb-8 pt-2 text-base leading-relaxed text-gray-300 sm:px-8 sm:text-lg font-chakra">
+                <p className="px-6 pb-8 pt-2 text-base leading-relaxed text-gray-300 sm:px-8 sm:text-lg">
                   {faq.answer}
                 </p>
               </motion.div>

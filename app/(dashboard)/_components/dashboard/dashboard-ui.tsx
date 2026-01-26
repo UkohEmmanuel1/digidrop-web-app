@@ -1,71 +1,104 @@
 "use client"
-import React from 'react';
-import { ArrowUpIcon, User } from 'lucide-react';
-import PointBox from '../point-box';
-import InfoCard from '../info-card';
-import { Button } from '@/components/ui/button';
-import DailySpinCard from '../daily-spin-card';
-import TaskQuest from '../quest-card';
-import { useUserStore } from '@/store/useUserProfile';
-import { useProfileStats } from '@/hooks/useGetProfileStats';
-import { useRouter } from 'next/navigation';
 
+import React from "react"
+import { ArrowUpIcon, User } from "lucide-react"
+import { useRouter } from "next/navigation"
 
+import PointBox from "../point-box"
+import InfoCard from "../info-card"
+import DailySpinCard from "../daily-spin-card"
+import TaskQuest from "../quest-card"
 
+import { Button } from "@/components/ui/button"
+import { useUserStore } from "@/store/useUserProfile"
+import { useProfileStats } from "@/hooks/useGetProfileStats"
 
-const comigdata={
-  icon : "/assets/dlogo.png",
+const comingData = {
+  icon: "/assets_icon/25.png",
   text: "Digiverse wallet",
   value: "Coming Soon",
-  
 }
 
-
 const DashboardUi = () => {
-   const router = useRouter()
-    const profile = useUserStore((state) => state.profile);
-    const { data:api_data, isLoading } = useProfileStats();
-    const testdata={
-        icon : ArrowUpIcon,
-        text: "Position",
-        value: api_data?.rank
-      }
-      const data={
-          icon : "/assets/star.png", midText: "POWER ON YOUR SB PASS", value: `${profile?.current_pass_power}x`  
-        }
-        const referdata={icon : User, text: "Referrals", value: api_data?.referral_count}
-    
+  const router = useRouter()
+  const profile = useUserStore((state) => state.profile)
+  const { data: api_data, isLoading } = useProfileStats()
+
+  const positionData = {
+    icon: ArrowUpIcon,
+    text: "Position",
+    value: api_data?.rank,
+  }
+  console.log("profile res:", api_data)
+  const passData = {
+    icon: "/assets/star.png",
+    midText: "POWER ON YOUR SB PASS",
+    value: `${profile?.current_pass_power}x`,
+  }
+
+  const referralData = {
+    icon: User,
+    text: "Referrals",
+    value: api_data?.referral_count,
+  }
+
   return (
-    <div className='min-h-screen w-full bg-gradient-to-b from-[#1f0e49]/30 via-[#004AAD]/50 to-[#1c1c1c]'>
-        
-        <div className='w-full flex flex-col items-center py-10'>
-          <h2 className='text-3xl text-white font-bold font-chakra p-4'>Welcome <span className='text-brandColor'>Babim99</span>
+    <main className="min-h-screen bg-gradient-to-b from-[#1f0e49]/30 via-[#004AAD]/50 to-[#1c1c1c]">
+      <div className="mx-auto max-w-7xl px-4 py-10">
+
+        {/* HEADER */}
+        <div className="flex flex-col items-center gap-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold font-chakra text-white">
+            Welcome <span className="text-brandColor">{profile?.names ? profile?.names : "username" }</span>
           </h2>
           <PointBox point={api_data?.point} isLoading={isLoading} />
         </div>
-        <section className='w-full py-8 flex flex-col items-center'>
-            <InfoCard data={testdata} isLoading={isLoading} />
-            <div className='h-0.5 w-[560px] bg-gray-400/50 mb-3 opacity-40'/>
-            <InfoCard data={comigdata}  isLoading={isLoading}/>
-            <InfoCard data={data}  isLoading={isLoading}/>
 
-            <Button onClick={() => router.push("/buy-pass")} className='bg-[#333333] border mb-2 py-2 border-gray-200 font-chakra px-16'>UPDATE YOUR PASS</Button>
-            <div className='h-0.5 w-[560px] bg-gray-400/50 mb-3 opacity-40'/>
-            <DailySpinCard targetDate="2025-06-01T12:00:00Z"/>
+        {/* INFO CARDS */}
+        <section className="mx-auto mt-10 max-w-2xl space-y-4">
+          <InfoCard data={positionData} isLoading={isLoading} />
+          <Divider />
+          <InfoCard data={comingData} isLoading={isLoading} />
+          <InfoCard data={passData} isLoading={isLoading} />
 
-            <InfoCard data={referdata} isLoading={isLoading}/>
+          <Button
+            onClick={() => router.push("/buy-pass")}
+            className="w-full bg-[#333333] border border-gray-200 font-chakra"
+          >
+            UPDATE YOUR PASS
+          </Button>
 
-            <Button className='w-[640px] bg-[#333333] border border-gray-400 shadow-md text-center'>REFERRAL LINK</Button>
-            <div className='flex w-full gap-10 px-8 md:px-0 md:max-w-2xl mt-10  items-center justify-between'>
-              <p className="text-sm font-chakra font-medium text-gray-200 text-left max-w-sm">Continuously engage with @DIGIDROP official tweets to earn a higher share of Points</p>
-              <Button size={"lg"} className='bg-[#333333] text-gray-200 border border-gray-200'>Open X</Button>
-            </div>
+          <Divider />
+          <DailySpinCard targetDate="2025-06-01T12:00:00Z" />
+          <InfoCard data={referralData} isLoading={isLoading} />
+
+          <Button className="w-full bg-[#333333] border border-gray-400">
+            REFERRAL LINK
+          </Button>
+
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between pt-6">
+            <p className="text-sm text-gray-300 max-w-md">
+              Continuously engage with @DIGIDROP official tweets to earn a higher
+              share of Points
+            </p>
+            <Button size="lg" variant="outline">
+              Open X
+            </Button>
+          </div>
         </section>
-        <section className='w-full'>
-            <TaskQuest />
+
+        {/* QUESTS */}
+        <section className="mt-14">
+          <TaskQuest />
         </section>
-    </div>
+      </div>
+    </main>
   )
 }
+
+const Divider = () => (
+  <div className="h-px w-full bg-gray-400/30" />
+)
 
 export default DashboardUi

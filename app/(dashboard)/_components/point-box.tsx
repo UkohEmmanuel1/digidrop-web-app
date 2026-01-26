@@ -1,18 +1,21 @@
 "use client"
-import { Skeleton } from '@/components/ui/skeleton';
-import { useProfileStats } from '@/hooks/useGetProfileStats';
-import React from 'react'
 
+import { Skeleton } from "@/components/ui/skeleton"
 
+const PointBox = ({
+  point,
+  isLoading,
+}: {
+  point: number
+  isLoading: boolean
+}) => {
+  if (isLoading) return <Skeleton className="h-20 w-40" />
 
-const PointBox = ({point, isLoading}:{point:number, isLoading: boolean}) => {
-  
-  if (isLoading) return <Skeleton className='w-[150px] h=[78px]' />;
   return (
-    <div className='border w-[150px] h=[78px] flex flex-col items-center border-purple-800 bg-[#1c1c1c] text-white rounded shadow-md px-6 py-4'>
-      <p className=" capitalize text-lg font-medium">claim point</p>
-      <p className="font-medium text-2xl">{point}</p>
-      </div>
+    <div className="flex w-40 flex-col items-center rounded-md border border-purple-800 bg-[#1c1c1c] px-6 py-4 text-white shadow-md">
+      <p className="text-sm uppercase tracking-wide">Claim Point</p>
+      <p className="text-2xl font-semibold">{point}</p>
+    </div>
   )
 }
 

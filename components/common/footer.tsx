@@ -36,7 +36,7 @@ const Footer = () => {
               TERMS AND CONDITIONS
             </Link>
 
-            <Link href="/privacy-policy" className="hover:text-white transition">
+            <Link href="/term-and-condition" className="hover:text-white transition">
               PRIVACY POLICY
             </Link>
           </div>
@@ -49,8 +49,8 @@ const Footer = () => {
               text-center
             "
           >
-            <Link href="/manifesto" className="hover:text-white transition">
-              MANIFESTO
+            <Link href="/whitepaper" className="hover:text-white transition">
+              WHITEPAPER
             </Link>
 
           </div>
