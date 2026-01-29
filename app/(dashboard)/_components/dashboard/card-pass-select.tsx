@@ -1,11 +1,10 @@
 'use client';
 import Image from 'next/image'
-import React from 'react'
 import { useRouter } from 'next/navigation';
 import { DigiPass } from '@/types/response-type';
 import { useUserStore } from '@/store/useUserProfile';
 import { cn } from '@/lib/utils';
-
+import { CheckCircle2 } from 'lucide-react';
 
 type CardPassProp = {
     data: DigiPass
@@ -16,7 +15,6 @@ const MintPass = ({ data }: CardPassProp) => {
     const currentPassPower = profile?.current_pass_power ?? 0;
     const currentPassId = profile?.current_pass_id;
     const isCurrent = currentPassId === data.id;
-    // Note: Kept your logic exactly as provided.
     const isLocked = profile?.has_pass && data.point_power <= currentPassPower;
 
     const router = useRouter()
@@ -29,64 +27,65 @@ const MintPass = ({ data }: CardPassProp) => {
         <div 
             onClick={handleClick}
             className={cn(
-                // Layout & Sizing (Mobile First)
-                "relative flex w-full max-w-[320px] flex-col items-center gap-5 p-6 transition-all duration-300",
+                // Mobile-First Layout & Font
+                "relative flex flex-col items-center font-chakra transition-all duration-500",
+                "w-full max-w-[280px] sm:max-w-[320px] mx-auto", 
+                "p-5 sm:p-8", 
                 
-                // Glass Effect
-                "bg-black/30 backdrop-blur-md border border-white/5 rounded-2xl shadow-lg",
+                // Glassmorphism Aesthetic
+                "bg-zinc-900/40 backdrop-blur-2xl border border-white/10 rounded-[28px] sm:rounded-[32px]",
                 
-                // Typography Base
-                "font-chakra text-gray-300",
-
-                // Conditional States
-                isLocked && "cursor-not-allowed opacity-50 grayscale",
-                !isLocked && !isCurrent && "cursor-pointer hover:bg-black/50 hover:border-white/20 hover:-translate-y-1 hover:shadow-xl",
-                isCurrent && "cursor-default border-brandColor/50 bg-brandColor/10"
+                // States & Animations
+                isLocked && "cursor-not-allowed opacity-40 grayscale",
+                !isLocked && !isCurrent && "cursor-pointer hover:border-white/30 hover:bg-white/[0.02] hover:-translate-y-2 active:scale-95",
+                isCurrent && "border-white/40 bg-white/[0.05] shadow-[0_0_30px_rgba(255,255,255,0.05)]"
             )}
         >
-            {/* Image Wrapper - ensuring responsive scaling */}
-            <div className="relative w-full aspect-[290/200] rounded-lg overflow-hidden shadow-inner">
-                <Image 
-                    src={data.card} 
-                    alt={data.name} 
-                    fill
-                    className="object-cover"
-                />
-            </div>
+            {/* Header: Name */}
+            <h3 className="text-[11px] font-bold text-base sm:text-lg tracking-widest text-white uppercase mb-6 sm:mb-8 text-center">
+                {data.name}
+            </h3>
 
-            {/* Content */}
-            <div className="flex flex-col items-center gap-2 w-full">
-                <h3 className='text-xl font-bold text-gray-100 uppercase tracking-wide text-center'>
-                    {data.name}
-                </h3>
-                
-                <div className="w-full h-px bg-white/10 my-1" />
-
-                <div className="flex justify-between w-full text-sm font-medium">
-                    <span>Stardust</span>
-                    <span className="text-gray-100">{data.point_power}</span>
+            {/* Card Visual: Slanted/Floating Container */}
+            <div className="relative w-full aspect-[2/3] mb-6 sm:mb-8 group">
+                <div className="relative h-full w-full transition-transform duration-700 group-hover:scale-105">
+                    <Image 
+                        src={data.card} 
+                        alt={data.name} 
+                        fill
+                        className="object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
+                        priority
+                    />
                 </div>
                 
-                <div className="flex justify-between w-full text-sm font-medium">
-                    <span>Price</span>
-                    <span className="text-gray-100">${data.usd_price}</span>
+                {/* Status Indicator Icon */}
+                <div className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 rounded-full">
+                    <CheckCircle2 
+                        className={cn(
+                            "w-7 h-7 sm:w-9 sm:h-9 transition-all duration-300",
+                            isCurrent ? "text-white scale-110" : "text-white/65"
+                        )} 
+                        strokeWidth={1.2}
+                    />
                 </div>
             </div>
 
-            {/* Current Pass Badge */}
+            {/* Footer: Stardust & Price */}
+            <div className="flex flex-col items-center gap-1 w-full">
+                <div className="flex items-center gap-2 text-white font-bold text-base sm:text-lg tracking-widest">
+                    <span className="text-white">x{data.point_power}</span>
+                    <span className="uppercase">STARDUST</span>
+                </div>
+                
+                <div className="text-zinc-500 text-xs sm:text-sm font-medium tracking-widest">
+                    ~${data.usd_price} BNB
+                </div>
+            </div>
+
+            {/* Subtle Active Glow */}
             {isCurrent && (
-                <div className="absolute top-4 right-4 bg-brandColor text-white text-xs font-bold px-3 py-1 rounded-full shadow-md z-10">
-                    CURRENT
-                </div>
+                <div className="absolute inset-0 rounded-[inherit] pointer-events-none shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]" />
             )}
-            
-            {/* Locked Overlay (Optional visual cue) */}
-            {isLocked && !isCurrent && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/20 rounded-2xl">
-                    <span className="bg-black/80 text-white px-4 py-1 rounded-md text-sm font-mono">LOCKED</span>
-                </div>
-            )}
-
         </div>
     )
 }

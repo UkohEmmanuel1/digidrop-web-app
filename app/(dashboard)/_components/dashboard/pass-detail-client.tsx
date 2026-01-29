@@ -153,7 +153,7 @@ export default function PassDetailClient({ pass }: Prop) {
                       <span className="text-sm font-medium text-gray-200 group-hover/item:text-white transition-colors">
                         {perk.label}
                       </span>
-                    </li>
+                    </li> 
                   ))}
                 </ul>
              </div>
@@ -165,16 +165,18 @@ export default function PassDetailClient({ pass }: Prop) {
         <div className="w-full max-w-xl mx-auto flex flex-col items-center gap-6 mt-4">
            {/* Button Container with Animated Glow */}
            <div className="w-full relative group">
-              <div className={`absolute -inset-1 bg-gradient-to-r ${theme.glow} rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200`}></div>
+              
               <div className="relative">
                  <PassActionButton pass={pass} />
               </div>
            </div>
            
-           {/* Disclaimer */}
-           <p className="text-xs text-center text-gray-500 max-w-2xl leading-relaxed">
-             Passports are non-transferable community credentials used to access DigiDrop social and gamified participation. They hold no external monetary value.
-           </p>
+           {/* Footer Disclaimer */}
+                <div className="mt-auto pt-16 w-full">
+                    <p className="mx-auto max-w-3xl rounded-xl border border-white/5 bg-black/60 p-4 text-center text-xs leading-relaxed text-gray-300 backdrop-blur-md sm:text-sm">
+                       SB Passports are non-transferable community credentials used to access Digiverse. They hold no external monetary value.
+                    </p>
+                </div>
         </div>
         
       </div>
