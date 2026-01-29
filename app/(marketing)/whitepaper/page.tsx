@@ -1,179 +1,134 @@
-"use client";
+'use client';
 
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 
-const Page = () => {
-  return (
-    <div
-      className="min-h-screen text-foreground flex flex-col"
-      style={{
-        background:
-          "linear-gradient(179.5deg, rgba(59, 31, 131, 0.3) 0.44%, rgba(0, 74, 173, 0.5) 49.67%, rgba(28, 28, 28, 0.75) 99.57%)",
-      }}
-    >
-      {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-6 pb-16 pt-12">
-        {/* Title Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 text-white">Our Whitepaper</h1>
-          <p className="text-xl text-gray-200">
-            Tokenizing Engagement & Marketing in the Web3 Era
-          </p>
-        </div>
-
-        {/* Abstract */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">Abstract</h2>
-          <p className="leading-relaxed">
-            Digi Drop is a SocialFi universe where participation replaces speculation. Through Soulbound Passes,
-            quests, and non-monetary Stardust, Digi Drop creates a shared digital space focused on engagement, creativity,
-            and community continuity.
-          </p>
-        </section>
-
-        {/* Introduction */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">
-            1. Introduction
-          </h2>
-          <p className="leading-relaxed">
-            Web3 does not need more pressure it needs more wonder. Digi Drop reimagines blockchain interaction as
-             a journey, where identity is persistent, participation is visible, and exploration is the reward.
-          </p>
-        </section>
-
-        {/* Problem Statement */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">
-            2. Problem Statement
-          </h2>
-          <div className="space-y-3">
-            {[
-              'Current Web3 ecosystems struggle with:',
-              'Speculation-driven engagement',
-              'Short-term user cycles',
-              'Regulatory friction tied to financial framing',
-              'Disconnected community experiences'
-            ].map((text, i) => (
-              <div key={i} className="flex items-start space-x-3">
-                <span className="block w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Solution */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl mb-6 text-white">
-            3. The Digidrop Solution
-          </h2>
-          <p className="mb-4">
-           Digi Drop introduces:
-          </p>
-          <div className="space-y-3">
-            {[
-              "Soulbound Passes as access keys",
-              "Stardust as non-financial participation markers",
-              "Quests as social gravity",
-              "No trading. No yield. Just movement.",
-            ].map((text, i) => (
-              <div key={i} className="flex items-start space-x-3">
-                <span className="block w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
-          
-        </section>
-
-        {/* How It Works */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">
-            4. How It Works
-          </h2>
-          <div className="space-y-3">
-            <p>1. Connect a wallet</p>
-
-            <p>2. Mint a Digi Drop Pass</p>
-
-            <p>3. Enter the dashboard</p>
-
-            <p>4. Complete quests and collaborations </p>
-
-            <p>5. Accumulate Stardust and recognition</p>
-          </div>
-        </section>
-
-        {/* Key Features */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">
-            5. Key Features
-          </h2>
-          {[
-            ["Pass-gated dashboard access"],
-            ["Quest-driven SocialFi mechanics"],
-            ["Rank-based exploration paths"],
-            ["Anti-abuse and fairness controls"],
-          ].map(([title, desc], i) => (
-            <div key={i} className="flex items-start space-x-3 mb-3">
-              <span className="block w-2 h-2 bg-blue-400 rounded-full mt-2"></span>
-              <p>{title}</p>
-            </div>
-          ))}
-        </section>
-
-        {/* Tokenomics */}
-        <section className="mb-12 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">
-            6. Tokenomics (Non-Financial)
-          </h2>
-          <div className="rounded-lgbackdrop-blur-sm">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              
-              {[
-                ["Digi Drop does not operate an investment token"],
-                ["Stardust has no market value"],
-                ["No transferability"],
-                ["No resale"],
-                ["No profit expectations"],
-              ].map(([a, b, c], i) => (
-                <React.Fragment key={i}>
-                  <div>{a}</div>
-                  <div>{b}</div>
-                  <div>{c}</div>
-                </React.Fragment>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Roadmap */}
-        <section className="mb-16 text-gray-200">
-          <h2 className="text-3xl font-bold mb-6 text-white">8. Roadmap</h2>
-          <div className=" rounded-lg p-6 backdrop-blur-sm ">
-            
-
-            {[
-              ["Phase I: Launch & Pass minting"],
-              ["Phase II: Quest universe expansion"], 
-              ["Phase III: Creator & community constellations"],
-              ["Phase IV: Optional non-financial governance layers"],
-            ].map(([phase], i) => (
-              <div
-                key={i}
-                className=""
-              >
-                 <span className="block w-2 h-2 mt-2"></span>
-                <p>{phase}</p>
-                
-              </div>
-            ))}
-          </div>
-        </section>
-      </main>
-    </div>
-  );
+type PolicySection = {
+  id: string;
+  title: string;
+  content: string[];
 };
 
-export default Page;
+const SECTIONS: PolicySection[] = [
+  {
+    id: 'intro',
+    title: '1. Introduction',
+    content: [
+      'In the silent vastness of Digiverse, trust is the gravity that holds everything together.',
+      'Your journey is protected by design quietly, deliberately, and with restraint.',
+    ],
+  },
+  {
+    id: 'collection',
+    title: '2. Data Collection',
+    content: [
+      'We navigate primarily by public wallet address nothing more.',
+      'Digi Drop does not collect personal names, physical addresses, or financial identifiers unless you voluntarily transmit them for clearly defined optional activities.',
+    ],
+  },
+  {
+    id: 'usage',
+    title: '3. Usage',
+    content: [
+      'Your wallet address is used only to:',
+      '• Verify ownership of a Digi Drop Pass before dashboard access',
+      '• Track Stardust as non-monetary participation markers',
+      '• Confirm Pass Rank (Void / Starlight / Solar)',
+      '• Record quest progression across the constellation',
+    ],
+  },
+  {
+    id: 'protection',
+    title: '4. Protection',
+    content: [
+      'Your path is shielded by blockchain transparency and internal access protocols.',
+      'DigiDrop does not sell, rent, or trade user data—ever.',
+    ],
+  },
+  {
+    id: 'command',
+    title: '5. Your Command',
+    content: [
+      'You may disconnect at any time and drift freely.',
+      'For questions, course corrections, or concerns, contact Mission Control through official DigiDrop channels.',
+    ],
+  },
+];
+
+export default function PrivacyPolicy() {
+  const [activeId, setActiveId] = useState<string>('intro');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const offsetThreshold = 150; // Adjust for sticky header height
+      
+      const offsets = SECTIONS.map((s) => {
+        const el = document.getElementById(s.id);
+        return { 
+          id: s.id, 
+          offset: el ? el.getBoundingClientRect().top : 0 
+        };
+      });
+
+      const current = offsets.findLast((s) => s.offset <= offsetThreshold);
+      if (current) setActiveId(current.id);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <main
+      className="min-h-screen w-full scroll-smooth bg-[#0B0B0B] font-chakra text-white"
+      style={{
+        backgroundImage:
+          'linear-gradient(179.5deg, rgba(59, 31, 131, 0.3) 0.44%, rgba(0, 74, 173, 0.5) 49.67%, rgba(28, 28, 28, 0.75) 99.57%)',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <div className="container mx-auto flex flex-col px-6 py-20 md:flex-row lg:px-12">
+        
+        {/* ===== SIDEBAR NAV ===== */}
+        
+
+        {/* ===== MAIN CONTENT ===== */}
+        <div className="md:w-3/4 md:pl-20">
+          <div className="mb-16">
+            <h1 className="mb-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-4xl font-bold text-transparent sm:text-5xl">
+              Privacy Policy
+            </h1>
+            <p className="text-xl font-medium text-gray-300">
+              Guardians of Your Cosmic Privacy
+            </p>
+          </div>
+
+          <div className="space-y-24">
+            {SECTIONS.map((section) => (
+              <article 
+                key={section.id} 
+                id={section.id} 
+                className="scroll-mt-32 border-b border-white/10 pb-12 last:border-0"
+              >
+                <h2 className="mb-6 text-2xl font-bold uppercase tracking-wide text-white sm:text-3xl">
+                  {section.title}
+                </h2>
+                <div className="space-y-4">
+                  {section.content.map((paragraph, idx) => (
+                    <p
+                      key={idx}
+                      className="text-base leading-relaxed text-gray-300 sm:text-lg"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </main>
+  );
+}
