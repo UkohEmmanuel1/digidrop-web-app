@@ -1,17 +1,41 @@
 import React from "react";
 import Navbar from "./_components/nav-bar";
 import Footer from "@/components/common/footer";
+import { Chakra_Petch } from "next/font/google"; 
+import type { Metadata } from "next";
+
+
+const chakra = Chakra_Petch({
+  variable: "--font-chakra", 
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  style: "normal"
+});
+
+export const metadata: Metadata = {
+  title: "DigiDrops - web3",
+  description: "A brief description of your website for SEO",
+  icons: {
+    icon: "assets/favicon.png", 
+  },
+};
+
 export default function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-        <Navbar/>
-      <main>
+    /* To make Navbar and Footer use the font, we apply 
+       chakra.className to the parent div, not just the <main> tag.
+    */
+    <div className={`${chakra.variable} ${chakra.className} antialiased bg-[#1C1C1C] min-h-screen flex flex-col`}>
+      <Navbar />
+      
+      <main className="flex-grow">
         {children}
       </main>
+      
       <Footer />
     </div>
   );

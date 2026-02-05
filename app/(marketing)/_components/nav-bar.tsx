@@ -1,94 +1,97 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import React, { useState, useEffect } from "react"
+import Link from "next/link"
+import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const Navbar: React.FC = () => {
-  const [isBetaDialogOpen, setIsBetaDialogOpen] = useState(false);
-  const [isHowToPlayDialogOpen, setIsHowToPlayDialogOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBetaDialogOpen, setIsBetaDialogOpen] = useState(false)
+  const [isHowToPlayDialogOpen, setIsHowToPlayDialogOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "unset"
     }
     return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isMenuOpen]);
+      document.body.style.overflow = "unset"
+    }
+  }, [isMenuOpen])
 
   const handleMobileNavClick = (action: () => void) => {
-    action();
-    setIsMenuOpen(false);
-  };
+    action()
+    setIsMenuOpen(false)
+  }
 
   return (
     <>
-      {/* Navbar Header */}
-      <header className="w-full h-16 sticky top-0 z-50 bg-[#0B0B0B] border-b border-white/10 text-gray-200">
-        <div className="container h-full mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center font-chakra">
+      {/* ===== HEADER ===== */}
+      <header className="sticky top-0 z-50 h-16 w-full border-b border-white/10 bg-[#0B0B0B]/95 backdrop-blur-md font-chakra text-gray-200">
+        <div className="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
           
           {/* Logo Section */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-8">
             <Link
               href="/"
-              className="flex items-center"
+              className="flex items-center transition-opacity hover:opacity-80"
               onClick={() => setIsMenuOpen(false)}
             >
               <Image
-                src="/assets_icon/25.png"
+                src="/assets/logo.png"
                 alt="Digi Drop Logo"
-                width={80}
-                height={80}
-                className="w-[60px] h-[60px] md:w-[80px] md:h-[80px] object-contain"
+                width={100}
+                height={100}
+                className="h-[50px] w-[50px] object-contain md:h-[60px] md:w-[60px]"
                 priority
               />
             </Link>
 
             {/* Desktop Nav Links */}
-            <nav className="hidden md:flex gap-6 font-medium">
+            <nav className="hidden items-center gap-6 font-medium md:flex">
               <button
-                className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
                 onClick={() => setIsHowToPlayDialogOpen(true)}
+                className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent transition-opacity hover:opacity-80"
               >
                 How to Play
               </button>
-              <Link href="#FAQs" className="hover:text-white transition-colors">
+              <Link
+                href="#FAQs"
+                className="transition-colors hover:text-purple-400"
+              >
                 FAQ
               </Link>
             </nav>
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex gap-4">
+          <div className="hidden items-center gap-4 md:flex">
             <Button
-              className="bg-transparent border border-purple-400 text-gray-200 hover:text-white hover:bg-purple-900/20"
+              variant="outline"
+              className="border-purple-500/50 bg-transparent font-chakra text-gray-200 hover:bg-purple-900/20 hover:text-white"
               onClick={() => setIsBetaDialogOpen(true)}
             >
               Beta
             </Button>
             <Button
               asChild
-              className="rounded-lg bg-gray-900 border border-purple-400 text-white hover:bg-gray-800"
+              className="bg-gray-100 font-chakra font-bold text-black hover:bg-gray-300"
             >
               <Link href="/login">Login with Wallet</Link>
             </Button>
           </div>
 
           {/* Mobile Actions + Hamburger */}
-          <div className="md:hidden flex items-center gap-3">
+          <div className="flex items-center gap-3 md:hidden">
             <Button
               asChild
               size="sm"
-              className="rounded-lg bg-gray-900 border border-purple-400 text-xs px-4 text-white hover:bg-gray-800"
+              className="h-8 border border-purple-500/50 bg-gray-900 font-chakra text-xs text-white hover:bg-gray-800"
             >
               <Link href="/login">Login</Link>
             </Button>
@@ -96,19 +99,15 @@ const Navbar: React.FC = () => {
             <button
               aria-label="Toggle menu"
               onClick={() => setIsMenuOpen((prev) => !prev)}
-              className="p-2 -mr-2 rounded-md active:bg-gray-800 transition-colors"
+              className="rounded-md p-1 text-gray-200 hover:bg-gray-800 active:scale-95 transition-colors"
             >
-              {isMenuOpen ? (
-                <X className="w-6 h-6 text-gray-200" />
-              ) : (
-                <Menu className="w-6 h-6 text-gray-200" />
-              )}
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile Slide-Down Menu */}
+      {/* ===== MOBILE MENU OVERLAY ===== */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -116,11 +115,11 @@ const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed top-16 left-0 right-0 bottom-0 z-40 bg-black/50 md:hidden overflow-y-auto backdrop-blur-sm"
+            className="fixed inset-0 top-16 z-40 overflow-y-auto bg-black/95 backdrop-blur-sm md:hidden font-chakra"
           >
-            <div className="container mx-auto px-4 pt-6 pb-12 flex flex-col items-end space-y-8">
+            <div className="container mx-auto flex flex-col items-end gap-6 px-4 py-8">
               <button
-                className="text-xl font-medium text-gray-100 hover:text-purple-400 w-full text-right"
+                className="w-full text-right text-xl font-medium text-gray-100 hover:text-purple-400"
                 onClick={() => handleMobileNavClick(() => setIsHowToPlayDialogOpen(true))}
               >
                 How to Play
@@ -128,16 +127,15 @@ const Navbar: React.FC = () => {
 
               <Link
                 href="#FAQs"
-                className="text-xl font-medium text-gray-100 hover:text-purple-400 w-full text-right"
+                className="w-full text-right text-xl font-medium text-gray-100 hover:text-purple-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 FAQ
               </Link>
 
-              {/* Beta Button - Aligned Right */}
-              <div className="w-full flex justify-end pt-2">
+              <div className="mt-4 w-full flex justify-end">
                 <Button
-                  className="bg-transparent border border-purple-400 text-gray-200 px-8 text-lg hover:bg-purple-900/20"
+                  className="w-full max-w-[150px] border border-purple-500 bg-transparent font-chakra text-lg hover:bg-purple-900/20"
                   onClick={() => handleMobileNavClick(() => setIsBetaDialogOpen(true))}
                 >
                   Beta
@@ -148,88 +146,88 @@ const Navbar: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Beta Dialog */}
+      {/* ===== BETA DIALOG ===== */}
       <AnimatePresence>
         {isBetaDialogOpen && (
           <div
-            className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-[60] p-4"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm font-chakra"
             onClick={() => setIsBetaDialogOpen(false)}
           >
             <motion.div
-              className="w-[95%] sm:w-full max-w-lg bg-[#181818] border border-white/10 text-white rounded-xl shadow-2xl p-6 sm:p-8"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg rounded-xl border border-white/10 bg-[#181818] p-8 shadow-2xl"
             >
-              <h2 className="font-chakra text-xl font-bold text-center text-gray-200 mb-4">
-                Beta Horizon <br />
-                <span className="text-purple-400 text-lg">
-                  Pioneer the Unknown.
-                </span>
-              </h2>
+              <div className="text-center">
+                <h2 className="mb-2 text-2xl font-bold uppercase text-white">
+                  Beta Horizon
+                </h2>
+                <p className="mb-6 text-lg text-purple-400">Pioneer the Unknown</p>
+                
+                <p className="mb-8 text-sm leading-relaxed text-gray-300">
+                  You are among the first to gaze upon this evolving galaxy. As beta
+                  voyagers, your discoveries refine the stars. Launch Bonus: Mint
+                  your Passport today to lock in your Stardust Multiplier before
+                  the galaxy expands.
+                </p>
 
-              <p className="text-gray-300 font-chakra text-sm sm:text-base leading-relaxed text-center break-words">
-                You are among the first to gaze upon this evolving galaxy. As beta
-                voyagers, your discoveries refine the stars. Launch Bonus: Mint
-                your Passport today to lock in your Stardust Multiplier before
-                the galaxy expands.
-              </p>
-
-              <div className="flex justify-end w-full mt-8">
-                <button
-                  className="px-6 py-2 bg-purple-400 rounded hover:bg-purple-600 text-white font-medium transition-colors"
-                  onClick={() => setIsBetaDialogOpen(false)}
-                >
-                  Close
-                </button>
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => setIsBetaDialogOpen(false)}
+                    className="bg-purple-600 font-chakra hover:bg-purple-500 text-white"
+                  >
+                    Close Transmission
+                  </Button>
+                </div>
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* How to Play Dialog */}
+      {/* ===== HOW TO PLAY DIALOG ===== */}
       <AnimatePresence>
         {isHowToPlayDialogOpen && (
           <div
-            className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-sm z-[60] p-4"
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm font-chakra"
             onClick={() => setIsHowToPlayDialogOpen(false)}
           >
             <motion.div
-              className="w-[95%] sm:w-full max-w-xl bg-[#181818] border border-white/10 text-white rounded-xl shadow-2xl max-h-[80vh] overflow-y-auto flex flex-col"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
+              className="flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border border-white/10 bg-[#181818] shadow-2xl"
             >
-              <div className="sticky top-0 bg-[#181818] z-10 px-6 py-5 border-b border-white/5 text-center shadow-lg">
-                <h1 className="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+              {/* Modal Header */}
+              <div className="border-b border-white/10 bg-[#181818] px-6 py-5 text-center">
+                <h2 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-2xl font-bold uppercase text-transparent">
                   Welcome to Digiverse
-                </h1>
+                </h2>
               </div>
 
-              <div className="p-5 space-y-6">
-                <div className="text-center">
-                  <p className="text-sm sm:text-base text-gray-400 max-w-md mx-auto break-words">
-                    <span className="font-semibold text-gray-200 block mb-2">
-                      Chart Your Course
-                    </span>
+              {/* Modal Body (Scrollable) */}
+              <div className="overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-purple-900 scrollbar-track-transparent">
+                <div className="mb-8 text-center">
+                  <h3 className="mb-2 text-lg font-bold text-white">Chart Your Course</h3>
+                  <p className="mx-auto max-w-md text-sm text-gray-400">
                     Your odyssey begins with a single spark. Follow this
-                    celestial path to enter the Digi Drop ecosystem.
+                    celestial path to enter the ecosystem.
                   </p>
                 </div>
 
-                <div className="space-y-6 text-sm sm:text-base text-gray-300">
+                <div className="space-y-6">
                   <StepItem
                     number="1"
                     title="Signal (Awaken Your Comms)"
-                    desc="Connect your wallet (Metamask or Trust Wallet) and switch your network to BNB Smart Chain (BEP20)."
+                    desc="Connect your wallet (Metamask, Trust Wallet) and switch your network to BNB Smart Chain (BEP20)."
                   />
                   <StepItem
                     number="2"
                     title="Supply (Select Your Engine)"
-                    desc="Choose your speed. Mint a Void (1x), Starlight (2x), or Solar (4x) Passport. Higher tiers gather Stardust faster."
+                    desc="Choose your speed. Mint a Black (1x), White (2x), or Gold (4x) Passport. Higher tiers gather Stardust faster."
                   />
                   <StepItem
                     number="3"
@@ -249,40 +247,42 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
 
-              <div className="sticky bottom-0 px-6 py-4 bg-[#181818] border-t border-white/5 flex justify-end">
-                <button
-                  className="px-6 py-2 bg-purple-400 rounded hover:bg-purple-600 text-white font-medium transition-colors"
+              {/* Modal Footer */}
+              <div className="border-t border-white/10 bg-[#181818] px-6 py-4 text-right">
+                <Button
                   onClick={() => setIsHowToPlayDialogOpen(false)}
+                  className="bg-purple-600 font-chakra hover:bg-purple-500 text-white"
                 >
                   Close
-                </button>
+                </Button>
               </div>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
     </>
-  );
-};
+  )
+}
 
+// Helper Component for Steps
 const StepItem = ({
   number,
   title,
   desc,
 }: {
-  number: string;
-  title: string;
-  desc: string;
+  number: string
+  title: string
+  desc: string
 }) => (
-  <div className="flex gap-4 items-start">
-    <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-purple-900/50 text-purple-300 font-bold text-sm border border-purple-500/30">
+  <div className="flex gap-4">
+    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-purple-500/30 bg-purple-900/40 text-sm font-bold text-purple-300">
       {number}
     </span>
-    <div className="flex-1">
-      <strong className="block text-gray-100 mb-1">{title}</strong>
-      <p className="leading-relaxed text-gray-400 break-words">{desc}</p>
+    <div>
+      <h4 className="mb-1 text-base font-bold text-gray-100">{title}</h4>
+      <p className="text-sm leading-relaxed text-gray-400">{desc}</p>
     </div>
   </div>
-);
+)
 
-export default Navbar;
+export default Navbar
